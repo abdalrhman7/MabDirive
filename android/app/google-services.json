@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "209904933376",
+    "project_id": "mab-drive",
+    "storage_bucket": "mab-drive.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209904933376:android:36626ba4f9b59631f116e5",
+        "android_client_info": {
+          "package_name": "com.example.mab_drive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOL8capWvb1WHfP7n5h0PxDkJmDWNIgoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
