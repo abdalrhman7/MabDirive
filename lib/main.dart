@@ -1,10 +1,16 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'package:country_picker/country_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mab_drive/Features/Auth/Register/View/Pages/register_screen.dart';
 import 'package:mab_drive/firebase_options.dart';
 
+import 'Core/ColorHelper.dart';
+import 'Features/Auth/Phone Verification/View/Pages/phone_verification_screen.dart';
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -15,22 +21,38 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: ColorHelper.mainColor),
+
+        useMaterial3: true,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+
+          style: ButtonStyle(
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10))
+            ),
+            backgroundColor: const MaterialStatePropertyAll(
+                ColorHelper.mainColor
+            ),
+            foregroundColor: const MaterialStatePropertyAll(
+                Colors.white
+            ),
+            overlayColor: MaterialStatePropertyAll(
+                Colors.white.withOpacity(.1)
+            ),
+          )
+        )
+      ),
       title: 'MAB Drive',
-      home: MyHomePage(),
+      initialRoute: RegisterScreen.routeName,
+      routes: {
+        RegisterScreen.routeName : (_) => RegisterScreen(),
+        PhoneVerificationScreen.routeName : (_) => PhoneVerificationScreen(),
+      },
+
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter App'),
-      ),
-      body: const Center(
-        child: Text('Widget Playground!'),
-      ),
-    );
-  }
-}
+
