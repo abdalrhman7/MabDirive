@@ -2,45 +2,45 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mab_drive/Core/Database/Models/user.dart' as MyUser;
+
+import '../../../../../Core/Database/Firebse/my_database.dart';
 
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitial());
-  FirebaseAuth auth = FirebaseAuth.instance;
-late String verfId;
+  FirebaseAuth authService = FirebaseAuth.instance;
 
-  register()async{
+  register({required String email,required String name,required String password})async{
     emit(RegisterLoading());
     try{
-       await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+20 01111269525',
-        verificationCompleted: (PhoneAuthCredential credential) {
-        },
-        verificationFailed: (FirebaseAuthException e) {},
-        codeSent: (String verificationId, int? resendToken) async{
-          verfId = verificationId;
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {},
+      var result = await authService.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
-      emit(RegisterSuccess('success'));
+
+      var myUser = MyUser.User(
+          id: result.user?.uid,
+          name: name,
+          email: email
+      );
+      await MyDataBase.addUser(myUser);
+      emit(RegisterSuccess('Success'));
     }on FirebaseAuthException catch (e) {
-      emit(RegisterError('ERROR$e'));
+      String errorMessage = 'Something Went Wrong';
+      if (e.code == 'weak-password') {
+        String errorMessage = 'The password provided is too weak.';
+       emit(RegisterError(errorMessage));
+      } else if (e.code == 'email-already-in-use') {
+        String errorMessage = 'The account already exists for that email.';
+        emit(RegisterError(errorMessage));
+      }
+    }catch (e) {
+      String errorMessage = 'Something Went Wrong$e';
+      emit(RegisterError(errorMessage));
+      print(e);
     }
   }
 
-  sendCode(String smsCode)async{
-    try{
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: verfId,
-          smsCode: smsCode
-      );
-      await auth.signInWithCredential(credential);
-    }on TimeoutException catch (ex) {
-      emit(RegisterError('Please Check Your Internet\n $ex'));
-    } catch (ex) {
-      print(ex);
-      emit(RegisterError('$ex'));
-    }
-  }
 }

@@ -1,20 +1,18 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mab_drive/Core/general_components/custom_form_field.dart';
 import 'package:mab_drive/Core/my_validators.dart';
+import 'package:mab_drive/Features/Auth/Register/ViewModel/Register%20Cubit/register_cubit.dart';
 
+import '../../../../../Core/general_components/build_show_toast.dart';
+import '../../../Login/View/Pages/login_screen.dart';
 import '../../../Phone Verification/View/Pages/phone_verification_screen.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
+
   static const String routeName = "register";
-
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
-  // Country textCountry = Country.worldWide;
   Country textCountry = Country(
       phoneCode: '20',
       countryCode: 'EG',
@@ -27,7 +25,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       displayNameNoCountryCode: '0',
       e164Key: '20-EG-0');
 
-  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController rePasswordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  RegisterCubit registerCubit = RegisterCubit();
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -46,61 +48,106 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               children: [
                 const Text(
-                  'Join us via phone number',
+                  'Join us via your Email',
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 25),
                 ),
                 const Text(
-                  'We will text a code to verify your phone',
+                  'Please enter your details',
                   style: TextStyle(color: Colors.white60, fontSize: 16),
                 ),
-                SizedBox(height: 60,),
+                SizedBox(height: 40,),
                 CustomFormField(
-                    keyboardType: TextInputType.number,
-                    prefix: TextButton.icon(
-                        onPressed: () {
-                          showCountry(context);
-                        },
-                        icon: Text(
-                          textCountry.flagEmoji,
-                          style: const TextStyle(fontSize: 30),
+                    keyboardType: TextInputType.name,
+                    hintText: 'Enter Your Name',
+                    validator: (value) => MyValidators.nameValidator(value),
+                    controller: nameController),
+                SizedBox(height: 20,),
+
+                CustomFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    hintText: 'Enter Your Email',
+                    validator: (value) => MyValidators.emailValidator(value),
+                    controller: emailController),
+                SizedBox(height: 20,),
+                CustomFormField(
+                    hintText: 'Enter Your password',
+                    validator: (value) => MyValidators.passwordValidator(value),
+                    controller: passwordController),
+                SizedBox(height: 20,),
+                CustomFormField(
+                    hintText: 'Enter password confirmation',
+                    validator: (value) =>
+                        MyValidators.repeatPasswordValidator(
+                            value: value, password: passwordController.text),
+                    controller: rePasswordController),
+                SizedBox(height: 40,),
+
+
+
+                BlocConsumer<RegisterCubit, RegisterState>(
+                  bloc: registerCubit,
+                  listener: (context, state) {
+                  },
+                  builder: (context, state) {
+                    if(state is RegisterLoading){
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    else if(state is RegisterError){
+                      buildShowToast(state.message);
+                    }
+                    else if(state is RegisterSuccess){
+                      buildShowToast(state.message);
+                      return SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            register();
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Register',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
                         ),
-                        label: Text(
-                          '+${textCountry.phoneCode}',
-                          style:
-                              const TextStyle(color: Colors.white, fontSize: 16),
-                        )),
-                    hintText: 'Enter Your phone',
-                    validator: (text){
-                      if(text == null || text.trim().isEmpty){
-                        return 'please Enter phone number';
-                      }
-                      var regex = RegExp(r"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$");
-                      if(!regex.hasMatch(text)){
-                        return 'please enter a valid phone number';
-                      }
-                    },
-                    controller: phoneController),
-                SizedBox(
-                  height: 40,
+                      );
+                    }
+                    return SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          register();
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            ' Next',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      register();
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        ' Next',
-                        style: TextStyle(fontSize: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Allready Have an Account ? " ,
+                      style: TextStyle(
+                        color:Color(0xffEDEDED),
                       ),
                     ),
-                  ),
-                )
+                    TextButton(
+                        onPressed: (){
+                          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+                        },
+                        child: Text("Login")),
+                  ],
+                ),
               ],
             ),
           ),
@@ -109,46 +156,50 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
- void register(){
-    if(formKey.currentState?.validate() == false){
+  void register()async{
+    if (formKey.currentState?.validate() == false) {
       return;
     }
-    phoneController.text = '${textCountry.phoneCode}${phoneController.text}';
-    Navigator.pushNamed(context, PhoneVerificationScreen.routeName,
-    arguments: phoneController.text
+    registerCubit.register(
+        email: emailController.text,
+        name: nameController.text,
+        password: passwordController.text
     );
   }
 
-  void showCountry(BuildContext context) {
-    showCountryPicker(
-        context: context,
-        countryListTheme: CountryListThemeData(
-          flagSize: 25,
-          backgroundColor: Colors.white,
-          textStyle: const TextStyle(fontSize: 16, color: Colors.blueGrey),
-          bottomSheetHeight: 500, // Optional. Country list modal height
-          //Optional. Sets the border radius for the bottomsheet.
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
-          //Optional. Styles the search field.
-          inputDecoration: InputDecoration(
-            labelText: 'Search',
-            hintText: 'Start typing to search',
-            prefixIcon: const Icon(Icons.search),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: const Color(0xFF8C98A8).withOpacity(0.2),
-              ),
-            ),
-          ),
-        ),
-        showPhoneCode: true,
-        onSelect: (Country country) {
-          setState(() {
-            textCountry = country;
-          });
-        });
-  }
+  // void showCountry(BuildContext context) {
+  //   showCountryPicker(
+  //       context: context,
+  //       countryListTheme: CountryListThemeData(
+  //         flagSize: 25,
+  //         backgroundColor: Colors.white,
+  //         textStyle: const TextStyle(fontSize: 16, color: Colors.blueGrey),
+  //         bottomSheetHeight: 500,
+  //         // Optional. Country list modal height
+  //         //Optional. Sets the border radius for the bottomsheet.
+  //         borderRadius: const BorderRadius.only(
+  //           topLeft: Radius.circular(20.0),
+  //           topRight: Radius.circular(20.0),
+  //         ),
+  //         //Optional. Styles the search field.
+  //         inputDecoration: InputDecoration(
+  //           labelText: 'Search',
+  //           hintText: 'Start typing to search',
+  //           prefixIcon: const Icon(Icons.search),
+  //           border: OutlineInputBorder(
+  //             borderSide: BorderSide(
+  //               color: const Color(0xFF8C98A8).withOpacity(0.2),
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       showPhoneCode: true,
+  //       onSelect: (Country country) {
+  //         setState(() {
+  //           textCountry = country;
+  //         });
+  //       });
+  // }
+
 }
+
