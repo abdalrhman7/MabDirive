@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:mab_drive/Features/Auth/Login/View/Pages/login_screen.dart';
 import 'package:mab_drive/Features/Auth/Register/View/Pages/register_screen.dart';
 import 'package:mab_drive/Features/Splash/View/Pages/splash_screen.dart';
+import 'package:mab_drive/Features/UserHome/View/user_home.dart';
 import 'package:mab_drive/firebase_options.dart';
 
 import 'Core/ColorHelper.dart';
-import 'Features/Auth/Phone Verification/View/Pages/phone_verification_screen.dart';
 import 'Features/onboarding/View/Pages/onboarding.dart';
 
 void main() async {
@@ -26,39 +26,27 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: ColorHelper.mainColor),
-
-        useMaterial3: true,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-
-          style: ButtonStyle(
-            shape: MaterialStatePropertyAll(
-              RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10))
-            ),
-            backgroundColor: const MaterialStatePropertyAll(
-                ColorHelper.mainColor
-            ),
-            foregroundColor: const MaterialStatePropertyAll(
-                Colors.white
-            ),
-            overlayColor: MaterialStatePropertyAll(
-                Colors.white.withOpacity(.1)
-            ),
-          )
-        )
-      ),
+          useMaterial3: true,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10))),
+            backgroundColor:
+                const MaterialStatePropertyAll(ColorHelper.mainColor),
+            foregroundColor: const MaterialStatePropertyAll(Colors.white),
+            overlayColor:
+                MaterialStatePropertyAll(Colors.white.withOpacity(.1)),
+          ))),
+      debugShowCheckedModeBanner: false,
       title: 'MAB Drive',
-      initialRoute: SplashScreen.routeNmae,
+      initialRoute: SplashScreen.routeName,
       routes: {
-        RegisterScreen.routeName : (_) => RegisterScreen(),
-        LoginScreen.routeName : (_) => LoginScreen(),
-        SplashScreen.routeNmae : (_) => SplashScreen(),
-        OnBoarding.routeName : (_) => OnBoarding(),
-    // PhoneVerificationScreen.routeName : (_) => PhoneVerificationScreen(),
+        RegisterScreen.routeName: (_) => RegisterScreen(),
+        LoginScreen.routeName: (_) => LoginScreen(),
+        SplashScreen.routeName: (_) => const SplashScreen(),
+        OnBoarding.routeName: (_) => const OnBoarding(),
+        UserHome.routeName: (_) => const UserHome(),
       },
-
     );
   }
 }
-
-
