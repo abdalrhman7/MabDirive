@@ -11,12 +11,7 @@ import 'package:mab_drive/Features/UserHome/View/user_home.dart';
 import 'package:mab_drive/firebase_options.dart';
 
 import 'Core/ColorHelper.dart';
-<<<<<<< HEAD
-=======
-import 'Core/theme_data.dart';
 import 'Features/Auth/Phone Verification/View/Pages/phone_verification_screen.dart';
-import 'Features/bottom_navigation_bar/screen/bottom_navigation_bar.dart';
->>>>>>> 60e89544656cd975fff49dddc5497d0c45646ecc
 import 'Features/onboarding/View/Pages/onboarding.dart';
 
 void main() async {
@@ -30,7 +25,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     return MaterialApp(
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: ColorHelper.mainColor),
@@ -45,7 +39,6 @@ class MyApp extends StatelessWidget {
             overlayColor:
                 MaterialStatePropertyAll(Colors.white.withOpacity(.1)),
           ))),
-      debugShowCheckedModeBanner: false,
       title: 'MAB Drive',
       initialRoute: SplashScreen.routeName,
       routes: {
@@ -53,28 +46,8 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (_) => LoginScreen(),
         SplashScreen.routeName: (_) => const SplashScreen(),
         OnBoarding.routeName: (_) => const OnBoarding(),
-        UserHome.routeName: (_) => const UserHome(),
+        // PhoneVerificationScreen.routeName : (_) => PhoneVerificationScreen(),
       },
-=======
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: themeData(context),
-        title: 'MAB Drive',
-        initialRoute: BottomNavbar.routeName,
-        routes: {
-          RegisterScreen.routeName: (_) => RegisterScreen(),
-          LoginScreen.routeName: (_) => LoginScreen(),
-          SplashScreen.routeNmae: (_) => const SplashScreen(),
-          OnBoarding.routeName: (_) => const OnBoarding(),
-          BottomNavbar.routeName: (_) => const BottomNavbar(),
-          // PhoneVerificationScreen.routeName : (_) => PhoneVerificationScreen(),
-        },
-      ),
->>>>>>> 60e89544656cd975fff49dddc5497d0c45646ecc
     );
   }
 }
