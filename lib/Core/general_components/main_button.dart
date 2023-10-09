@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../ColorHelper.dart';
 
@@ -19,18 +20,18 @@ class MainButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 42,
+      height: 42.h,
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          backgroundColor: ColorHelper.mainColor,
+          backgroundColor: color ?? ColorHelper.mainColor,
         ),
         child: Text(
           text,
-          style: const TextStyle(
-            color: Colors.white,
+          style:  TextStyle(
+            color: ColorHelper.darkColor,
             fontWeight: FontWeight.w500,
-            fontSize: 20,
+            fontSize: 18.sp,
           ),
         ),
       ),
