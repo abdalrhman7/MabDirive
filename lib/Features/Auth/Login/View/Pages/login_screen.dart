@@ -17,10 +17,10 @@ LoginCubit loginCubit = LoginCubit();
    @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff171717),
+      backgroundColor: const Color(0xff171717),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xff171717),
+        backgroundColor: const Color(0xff171717),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -35,20 +35,20 @@ LoginCubit loginCubit = LoginCubit();
                     fontWeight: FontWeight.bold,
                     fontSize: 25),
               ),
-              SizedBox(height: 40,),
+              const SizedBox(height: 40,),
 
               CustomFormField(
                   keyboardType: TextInputType.emailAddress,
                   hintText: 'Enter Your Email',
                   validator: (value) => MyValidators.emailValidator(value),
                   controller: emailController),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               CustomFormField(
                   hintText: 'Enter Your password',
                   validator: (value) => MyValidators.passwordValidator(value),
                   controller: passwordController),
 
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               BlocConsumer<LoginCubit, LoginState>(
@@ -57,7 +57,7 @@ LoginCubit loginCubit = LoginCubit();
                 },
                 builder: (context, state) {
                   if(state is LoginLoading){
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   else if(state is LoginError){
                     buildShowToast(state.message);
@@ -101,7 +101,7 @@ LoginCubit loginCubit = LoginCubit();
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't Have an Account ? " ,
+                  const Text("Don't Have an Account ? " ,
                     style: TextStyle(
                       color:Color(0xffEDEDED),
                     ),
@@ -110,7 +110,7 @@ LoginCubit loginCubit = LoginCubit();
                       onPressed: (){
                         Navigator.pushReplacementNamed(context, RegisterScreen.routeName);
                       },
-                      child: Text("Register")),
+                      child: const Text("Register")),
                 ],
               ),
             ],

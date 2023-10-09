@@ -7,7 +7,7 @@ class OnBoarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xff171717),
+        backgroundColor: const Color(0xff171717),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Center(
@@ -18,7 +18,7 @@ class OnBoarding extends StatelessWidget {
                   'Move with safety',
                   style: TextStyle(color: Colors.white, fontSize: 30),
                 ),
-                Spacer(),
+                const Spacer(),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

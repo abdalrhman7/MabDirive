@@ -7,7 +7,6 @@ import 'package:mab_drive/Features/Auth/Register/ViewModel/Register%20Cubit/regi
 
 import '../../../../../Core/general_components/build_show_toast.dart';
 import '../../../Login/View/Pages/login_screen.dart';
-import '../../../Phone Verification/View/Pages/phone_verification_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
@@ -35,10 +34,10 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff171717),
+      backgroundColor: const Color(0xff171717),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xff171717),
+        backgroundColor: const Color(0xff171717),
       ),
       body: Center(
         child: Padding(
@@ -58,32 +57,32 @@ class RegisterScreen extends StatelessWidget {
                   'Please enter your details',
                   style: TextStyle(color: Colors.white60, fontSize: 16),
                 ),
-                SizedBox(height: 40,),
+                const SizedBox(height: 40,),
                 CustomFormField(
                     keyboardType: TextInputType.name,
                     hintText: 'Enter Your Name',
                     validator: (value) => MyValidators.nameValidator(value),
                     controller: nameController),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
                 CustomFormField(
                     keyboardType: TextInputType.emailAddress,
                     hintText: 'Enter Your Email',
                     validator: (value) => MyValidators.emailValidator(value),
                     controller: emailController),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 CustomFormField(
                     hintText: 'Enter Your password',
                     validator: (value) => MyValidators.passwordValidator(value),
                     controller: passwordController),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 CustomFormField(
                     hintText: 'Enter password confirmation',
                     validator: (value) =>
                         MyValidators.repeatPasswordValidator(
                             value: value, password: passwordController.text),
                     controller: rePasswordController),
-                SizedBox(height: 40,),
+                const SizedBox(height: 40,),
 
 
 
@@ -93,7 +92,7 @@ class RegisterScreen extends StatelessWidget {
                   },
                   builder: (context, state) {
                     if(state is RegisterLoading){
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }
                     else if(state is RegisterError){
                       buildShowToast(state.message);
@@ -136,7 +135,7 @@ class RegisterScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Allready Have an Account ? " ,
+                    const Text("Allready Have an Account ? " ,
                       style: TextStyle(
                         color:Color(0xffEDEDED),
                       ),
@@ -145,7 +144,7 @@ class RegisterScreen extends StatelessWidget {
                         onPressed: (){
                           Navigator.pushReplacementNamed(context, LoginScreen.routeName);
                         },
-                        child: Text("Login")),
+                        child: const Text("Login")),
                   ],
                 ),
               ],

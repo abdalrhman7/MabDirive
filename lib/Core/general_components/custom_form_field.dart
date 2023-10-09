@@ -28,7 +28,7 @@ class CustomFormField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: isPassword,
       //textDirection: TextDirection,
-      style: TextStyle(color: Color(0xffEDEDED)),
+      style: const TextStyle(color: Color(0xffEDEDED)),
       decoration: InputDecoration(
           suffixIcon: suffix,
           prefixIcon: prefix,
