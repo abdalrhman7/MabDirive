@@ -1,3 +1,4 @@
+import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
@@ -5,12 +6,12 @@ import 'package:mab_drive/Core/general_components/defult_text_form_field.dart';
 import 'package:mab_drive/Core/general_components/main_button.dart';
 import 'package:mab_drive/Features/UserHome/View/components/ride_car_type.dart';
 import 'package:mab_drive/Features/UserHome/View/components/text_form_button.dart';
+import 'package:mab_drive/Features/UserHome/ViewModel/cubit/user_home_cubit.dart';
+import 'package:mab_drive/Features/location%20search/View/pages/location_search_screen.dart';
 
 class UserHomeLowerPart extends StatefulWidget {
-  const UserHomeLowerPart({
-    super.key,
-  });
-
+  UserHomeLowerPart({super.key, required this.cupit});
+  UserHomeCubit cupit;
   @override
   State<UserHomeLowerPart> createState() => _UserHomeLowerPartState();
 }
@@ -86,9 +87,24 @@ class _UserHomeLowerPartState extends State<UserHomeLowerPart> {
               height: 10.h,
             ),
             TextFormButton(
-              hintText: "Pickup location",
+              hintText: widget.cupit.pickupLocationAddress ?? "Pickup location",
               icon: Icon(Icons.circle_outlined, size: 30.r, color: Colors.grey),
-              onTab: () {},
+              onTab: () {
+                showFlexibleBottomSheet(
+                  minHeight: 0,
+                  initHeight: 0.8,
+                  maxHeight: 1,
+                  context: context,
+                  bottomSheetColor: Colors.transparent,
+                  builder: (context, scrollController, bottomSheetOffset) =>
+                      SearchBottomSheet(
+                    scrollController: scrollController,
+                    searchText: "Pickup location",
+                  ),
+                  anchors: [0, 0.5, 1],
+                  isSafeArea: true,
+                );
+              },
             ),
             TextFormButton(
               hintText: "Destination",

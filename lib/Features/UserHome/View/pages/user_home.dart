@@ -62,9 +62,11 @@ class UserHome extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Positioned(
+                Positioned(
                   bottom: 0,
-                  child: UserHomeLowerPart(),
+                  child: UserHomeLowerPart(
+                    cupit: cupit,
+                  ),
                 ),
               ]),
             ),

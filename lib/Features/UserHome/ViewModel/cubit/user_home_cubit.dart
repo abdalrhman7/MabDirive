@@ -70,7 +70,9 @@ class UserHomeCubit extends Cubit<UserHomeState> {
     placemarkFromCoordinates(
             currentPosition.latitude, currentPosition.longitude)
         .then((value) {
-      print(value.toString());
+      pickupLocationAddress = "${value.first.street}";
+      debugPrint(pickupLocationAddress);
+      emit(GetCurrentLocationSussesState());
     });
   }
 }
