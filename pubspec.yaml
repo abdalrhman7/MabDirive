@@ -51,6 +51,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   bottom_sheet: ^4.0.0
   geolocator: ^10.1.0
+  geocoding: ^2.1.1
+  google_geocoding_api: ^1.4.1
 
 
 dev_dependencies:

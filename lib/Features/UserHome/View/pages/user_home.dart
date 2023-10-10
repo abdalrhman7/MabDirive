@@ -23,30 +23,51 @@ class UserHome extends StatelessWidget {
           var cupit = UserHomeCubit.get(context);
           return Scaffold(
             drawer: const AppDrawer(currentPage: "UserHome"),
-            body: Stack(children: [
-              Mab(cupit: cupit),
-              const CustomDrawerButton(),
-              Positioned(
-                top: 30.h,
-                right: 20.w,
-                child: CircleAvatar(
-                  backgroundColor: Colors.black.withOpacity(0.3),
-                  minRadius: 22.r,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.share,
-                      color: Colors.white,
-                      size: 22.r,
+            body: SizedBox(
+              height: 690.h,
+              child: Stack(children: [
+                Mab(cupit: cupit),
+                const CustomDrawerButton(),
+                Positioned(
+                  top: 30.h,
+                  right: 20.w,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.black.withOpacity(0.4),
+                    minRadius: 22.r,
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.share,
+                        color: Colors.white,
+                        size: 22.r,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const Positioned(
-                bottom: 0,
-                child: UserHomeLowerPart(),
-              ),
-            ]),
+                Positioned(
+                  bottom: 310.h,
+                  right: 20.w,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.black.withOpacity(0.4),
+                    minRadius: 22.r,
+                    child: IconButton(
+                      onPressed: () {
+                        cupit.locatePosition();
+                      },
+                      icon: Icon(
+                        Icons.my_location_sharp,
+                        color: Colors.white,
+                        size: 22.r,
+                      ),
+                    ),
+                  ),
+                ),
+                const Positioned(
+                  bottom: 0,
+                  child: UserHomeLowerPart(),
+                ),
+              ]),
+            ),
           );
         },
       ),
