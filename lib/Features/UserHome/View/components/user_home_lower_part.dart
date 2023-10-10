@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
 import 'package:mab_drive/Core/general_components/defult_text_form_field.dart';
+import 'package:mab_drive/Core/general_components/main_button.dart';
 import 'package:mab_drive/Features/UserHome/View/components/ride_car_type.dart';
+import 'package:mab_drive/Features/UserHome/View/components/text_form_button.dart';
 
 class UserHomeLowerPart extends StatefulWidget {
   const UserHomeLowerPart({
@@ -19,7 +21,7 @@ class _UserHomeLowerPartState extends State<UserHomeLowerPart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250.h,
+      height: 300.h,
       width: 360.w,
       decoration: BoxDecoration(
           color: ColorHelper.darkColor,
@@ -80,13 +82,35 @@ class _UserHomeLowerPartState extends State<UserHomeLowerPart> {
                 ],
               ),
             ),
-            defaultTextFormFelid(
-                controller: TextEditingController(),
-                text: 'Pickup location',
-                enabled: false,
-                prefixIcon:
-                    Icon(Icons.location_on, size: 20.r, color: Colors.white),
-                fillColor: Colors.white)
+            SizedBox(
+              height: 10.h,
+            ),
+            TextFormButton(
+              hintText: "Pickup location",
+              icon: Icon(Icons.circle_outlined, size: 30.r, color: Colors.grey),
+              onTab: () {},
+            ),
+            TextFormButton(
+              hintText: "Destination",
+              icon: Icon(Icons.circle_outlined, size: 30.r, color: Colors.grey),
+              onTab: () {},
+            ),
+            TextFormButton(
+              hintText: "Offer your fare",
+              icon: Text(
+                "EGP",
+                style: TextStyle(color: Colors.grey, fontSize: 18.sp),
+              ),
+              onTab: () {},
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            MainButton(
+              text: "Find a driver",
+              onTap: () {},
+              color: ColorHelper.greenColor,
+            )
           ],
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mab_drive/Features/UserHome/View/pages/user_home.dart';
 import 'package:mab_drive/Features/ride_requests/view/pages/ride_requests_screen.dart';
 
 class SplashScreen extends StatelessWidget {
