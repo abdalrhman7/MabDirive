@@ -12,7 +12,7 @@ class CustomDrawerButton extends StatelessWidget {
       top: 30.h,
       left: 20.w,
       child: CircleAvatar(
-        backgroundColor: Colors.black.withOpacity(0.3),
+        backgroundColor: Colors.black.withOpacity(0.4),
         minRadius: 22.r,
         child: IconButton(
           onPressed: () {

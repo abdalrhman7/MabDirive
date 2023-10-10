@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Features/Auth/Login/View/Pages/login_screen.dart';
 import 'package:mab_drive/Features/Auth/Register/View/Pages/register_screen.dart';
+import 'package:mab_drive/Features/History/View/Pages/history_screen.dart';
+import 'package:mab_drive/Features/Profile%20Screen/View/Pages/profile_screen.dart';
 import 'package:mab_drive/Features/Splash/View/Pages/splash_screen.dart';
 import 'package:mab_drive/Features/UserHome/View/pages/user_home.dart';
 import 'package:mab_drive/firebase_options.dart';
@@ -44,6 +46,8 @@ class MyApp extends StatelessWidget {
             OnBoarding.routeName: (_) => const OnBoarding(),
             DriverBottomNavbar.routeName: (_) => const DriverBottomNavbar(),
             UserHome.routeName: (_) => const UserHome(),
+            ProfileScreen.routeName : (_) =>  ProfileScreen(),
+            HistoryScreen.routeName : (_) =>  HistoryScreen(),
           },
         ),
       ),

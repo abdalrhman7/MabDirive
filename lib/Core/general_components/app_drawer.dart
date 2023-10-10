@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
 import 'package:mab_drive/Core/general_components/main_button.dart';
+import 'package:mab_drive/Features/History/View/Pages/history_screen.dart';
+import 'package:mab_drive/Features/Profile%20Screen/View/Pages/profile_screen.dart';
 import 'package:mab_drive/Features/UserHome/View/pages/user_home.dart';
 import 'package:mab_drive/Features/bottom_navigation_bar/screen/bottom_navigation_bar.dart';
 
@@ -17,21 +19,22 @@ class AppDrawer extends StatelessWidget {
         children: [
           SizedBox(height: 48.h),
           const AccountDetailsWidget(),
-          buildListTile(icon: Icons.car_crash_outlined, text: 'City'),
-          buildListTile(icon: Icons.person_2_outlined, text: 'My Account'),
-          buildListTile(
-              icon: Icons.miscellaneous_services_outlined, text: 'Services'),
-          buildListTile(icon: Icons.language_outlined, text: 'City to city'),
-          buildListTile(icon: Icons.car_repair_sharp, text: 'Freight'),
-          buildListTile(icon: Icons.health_and_safety_outlined, text: 'Safety'),
-          buildListTile(icon: Icons.settings, text: 'Settings'),
-          buildListTile(icon: Icons.info_outline, text: 'FAQ'),
-          buildListTile(icon: Icons.support_agent, text: 'Support'),
-          buildListTile(icon: Icons.edit, text: 'Online registration'),
+          SizedBox(height: 14.h),
+          InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, HistoryScreen.routeName);
+              },
+              child: buildListTile(icon: Icons.history, text: 'History')),
+          InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, ProfileScreen.routeName);
+              },
+              child: buildListTile(icon: Icons.settings, text: 'Settings')),
+          const Spacer(),
           Divider(color: Colors.grey[700]),
           SizedBox(height: 14.h),
           SizedBox(
-            width: 0.35.sh,
+            width: 0.32.sh,
             child: MainButton(
               text: (currentPage == "UserHome") ? 'Driver Mode' : "User Mode",
               onTap: () {
@@ -45,6 +48,7 @@ class AppDrawer extends StatelessWidget {
               color: ColorHelper.greenColor,
             ),
           ),
+          SizedBox(height: 14.h),
         ],
       ),
     );
