@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mab_drive/Features/UserHome/View/user_home.dart';
+import 'package:mab_drive/Features/UserHome/View/pages/user_home.dart';
+import 'package:mab_drive/Features/ride_requests/view/pages/ride_requests_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -7,7 +8,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, UserHome.routeName);
+      Navigator.pushReplacementNamed(context, RideRequestsScreen.routeName);
     });
     return const Scaffold(
       backgroundColor: Color(0xff171717),

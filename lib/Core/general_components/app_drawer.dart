@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
 import 'package:mab_drive/Core/general_components/main_button.dart';
+import 'package:mab_drive/Features/UserHome/View/pages/user_home.dart';
+import 'package:mab_drive/Features/bottom_navigation_bar/screen/bottom_navigation_bar.dart';
 
 import 'account_details_widget.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({Key? key}) : super(key: key);
-
+  const AppDrawer({Key? key, required this.currentPage}) : super(key: key);
+  final String currentPage;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -31,8 +33,15 @@ class AppDrawer extends StatelessWidget {
           SizedBox(
             width: 0.35.sh,
             child: MainButton(
-              text: 'Passenger Mode',
-              onTap: () {},
+              text: (currentPage == "UserHome") ? 'Driver Mode' : "User Mode",
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    (currentPage == "UserHome")
+                        ? DriverBottomNavbar.routeName
+                        : UserHome.routeName,
+                    (route) => false);
+              },
               color: ColorHelper.greenColor,
             ),
           ),

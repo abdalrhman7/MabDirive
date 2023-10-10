@@ -6,15 +6,15 @@ import '../../../Core/ColorHelper.dart';
 import '../../../Core/general_components/app_drawer.dart';
 import '../../ride_requests/view/pages/ride_requests_screen.dart';
 
-class BottomNavbar extends StatefulWidget {
-  const BottomNavbar({Key? key}) : super(key: key);
+class DriverBottomNavbar extends StatefulWidget {
+  const DriverBottomNavbar({Key? key}) : super(key: key);
   static const String routeName = 'BottomNavbar';
 
   @override
-  State<BottomNavbar> createState() => _BottomNavbarState();
+  State<DriverBottomNavbar> createState() => _BottomNavbarState();
 }
 
-class _BottomNavbarState extends State<BottomNavbar> {
+class _BottomNavbarState extends State<DriverBottomNavbar> {
   final _bottomNavbarController = PersistentTabController();
 
   List<Widget> _buildScreens() {
@@ -88,7 +88,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const AppDrawer(),
+      drawer: const AppDrawer(currentPage: "DriverHome"),
       body: _persistentTabView(),
     );
   }

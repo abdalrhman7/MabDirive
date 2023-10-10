@@ -7,6 +7,7 @@ import '../widget/send_offers_widget.dart';
 
 class RideRequestsScreen extends StatelessWidget {
   const RideRequestsScreen({super.key});
+  static String routeName = "RideRequestsScreen";
 
   @override
   Widget build(BuildContext context) {

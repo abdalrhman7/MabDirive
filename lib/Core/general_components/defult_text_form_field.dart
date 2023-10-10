@@ -6,6 +6,7 @@ Widget defaultTextFormFelid({
   required Icon prefixIcon,
   required Color fillColor,
   bool? enabled,
+  bool? border,
 }) {
   return Padding(
     padding: const EdgeInsets.all(12.0),
