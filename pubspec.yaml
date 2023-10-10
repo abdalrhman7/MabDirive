@@ -50,6 +50,7 @@ dependencies:
   persistent_bottom_nav_bar_v2: ^4.2.8
   flutter_rating_bar: ^4.0.1
   bottom_sheet: ^4.0.0
+  geolocator: ^10.1.0
 
 
 dev_dependencies:

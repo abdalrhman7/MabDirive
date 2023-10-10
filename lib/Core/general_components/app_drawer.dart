@@ -17,21 +17,14 @@ class AppDrawer extends StatelessWidget {
         children: [
           SizedBox(height: 48.h),
           const AccountDetailsWidget(),
-          buildListTile(icon: Icons.car_crash_outlined, text: 'City'),
-          buildListTile(icon: Icons.person_2_outlined, text: 'My Account'),
-          buildListTile(
-              icon: Icons.miscellaneous_services_outlined, text: 'Services'),
-          buildListTile(icon: Icons.language_outlined, text: 'City to city'),
-          buildListTile(icon: Icons.car_repair_sharp, text: 'Freight'),
-          buildListTile(icon: Icons.health_and_safety_outlined, text: 'Safety'),
+          SizedBox(height: 14.h),
+          buildListTile(icon: Icons.history, text: 'History'),
           buildListTile(icon: Icons.settings, text: 'Settings'),
-          buildListTile(icon: Icons.info_outline, text: 'FAQ'),
-          buildListTile(icon: Icons.support_agent, text: 'Support'),
-          buildListTile(icon: Icons.edit, text: 'Online registration'),
+          const Spacer(),
           Divider(color: Colors.grey[700]),
           SizedBox(height: 14.h),
           SizedBox(
-            width: 0.35.sh,
+            width: 0.32.sh,
             child: MainButton(
               text: (currentPage == "UserHome") ? 'Driver Mode' : "User Mode",
               onTap: () {
@@ -45,6 +38,7 @@ class AppDrawer extends StatelessWidget {
               color: ColorHelper.greenColor,
             ),
           ),
+          SizedBox(height: 14.h),
         ],
       ),
     );
