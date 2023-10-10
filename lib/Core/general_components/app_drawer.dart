@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
 import 'package:mab_drive/Core/general_components/main_button.dart';
+import 'package:mab_drive/Features/History/View/Pages/history_screen.dart';
+import 'package:mab_drive/Features/Profile%20Screen/View/Pages/profile_screen.dart';
 import 'package:mab_drive/Features/UserHome/View/pages/user_home.dart';
 import 'package:mab_drive/Features/bottom_navigation_bar/screen/bottom_navigation_bar.dart';
 
@@ -18,8 +20,16 @@ class AppDrawer extends StatelessWidget {
           SizedBox(height: 48.h),
           const AccountDetailsWidget(),
           SizedBox(height: 14.h),
-          buildListTile(icon: Icons.history, text: 'History'),
-          buildListTile(icon: Icons.settings, text: 'Settings'),
+          InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, HistoryScreen.routeName);
+              },
+              child: buildListTile(icon: Icons.history, text: 'History')),
+          InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, ProfileScreen.routeName);
+              },
+              child: buildListTile(icon: Icons.settings, text: 'Settings')),
           const Spacer(),
           Divider(color: Colors.grey[700]),
           SizedBox(height: 14.h),
