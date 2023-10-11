@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mab_drive/Features/Auth/Register/View/Pages/register_screen.dart';
 import 'package:mab_drive/Features/ride_requests/view/pages/ride_requests_screen.dart';
+
+import '../../../Auth/Login/ViewModel/login_cubit.dart';
+import '../../../UserHome/View/pages/user_home.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -7,7 +11,12 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, RideRequestsScreen.routeName);
+      Navigator.pushReplacementNamed(context,
+
+        (LoginCubit.uid!= '' || LoginCubit.uid!= null)
+            ? UserHome.routeName
+            :  RegisterScreen.routeName,
+         );
     });
     return const Scaffold(
       backgroundColor: Color(0xff171717),
