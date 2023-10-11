@@ -1,22 +1,31 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../Core/Database/Firebse/my_database.dart';
+import '../../../Profile Screen/ViewModel/profile_provider.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
   FirebaseAuth authService = FirebaseAuth.instance;
-
-  login({required String email ,required String password})async{
+  static String uid = '';
+  login({required String email ,required String password,required bool keepMeLogin})async{
     emit(LoginLoading());
     try{
       var result = await authService.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-       await MyDataBase.readUser(result.user?.uid ?? "");
+       await MyDataBase.readUser(result.user?.uid ?? '');
+      if (keepMeLogin) {
+         await const FlutterSecureStorage()
+            .write(key: 'token', value: result.user?.uid??'');
+      }
+      var user = await MyDataBase.readUser(result.user?.uid ?? "");
       emit(LoginSuccess('Success'));
     }on FirebaseAuthException catch (e) {
 

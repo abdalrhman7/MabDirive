@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mab_drive/Core/ColorHelper.dart';
 import 'package:mab_drive/Features/Auth/Register/View/Pages/register_screen.dart';
+import 'package:mab_drive/Features/ride_requests/view/pages/ride_requests_screen.dart';
 
 import '../../../../../Core/general_components/build_show_toast.dart';
 import '../../../../../Core/general_components/custom_form_field.dart';
 import '../../../../../Core/my_validators.dart';
+import '../../../../UserHome/View/pages/user_home.dart';
 import '../../ViewModel/login_cubit.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
    LoginScreen({super.key});
 static const String routeName = "login";
-  final TextEditingController emailController = TextEditingController();
-   final TextEditingController passwordController = TextEditingController();
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController(text: 'test@test1.com');
+
+   final TextEditingController passwordController = TextEditingController(text: '123456789');
+
    final formKey = GlobalKey<FormState>();
+
 LoginCubit loginCubit = LoginCubit();
+
+bool keepMeLogged = false;
+
    @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,52 +67,38 @@ LoginCubit loginCubit = LoginCubit();
               const SizedBox(
                 height: 40,
               ),
-              BlocConsumer<LoginCubit, LoginState>(
-                bloc: loginCubit,
-                listener: (context, state) {
-                },
-                builder: (context, state) {
-                  if(state is LoginLoading){
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  else if(state is LoginError){
-                    buildShowToast(state.message);
-                  }
-                  else if(state is LoginSuccess){
-                    buildShowToast(state.message);
-                    return SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          login();
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            ' Next',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  return SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        login();
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
+              Row(
+                children: [
+                  Checkbox(
+                    activeColor: ColorHelper.mainColor,
+                    side: const BorderSide(color: Colors.white),
+                    overlayColor: MaterialStatePropertyAll(
+                      Colors.white.withOpacity(.1)
                     ),
-                  );
-                },
+                    checkColor: Colors.white,
+                    value: keepMeLogged,
+                    onChanged: (value) {
+                      setState(() {
+                        keepMeLogged = value!;
+                      });
+
+
+                    },
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'keep Me Logged In',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
               ),
+              buildBlocConsumerMainButton(),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -119,12 +121,51 @@ LoginCubit loginCubit = LoginCubit();
       ),
     );
   }
+
   login()async{
     if(formKey.currentState?.validate() == false) {
       return;
     }
     loginCubit.login(
         email: emailController.text,
-        password: passwordController.text);
+        password: passwordController.text,
+      keepMeLogin: keepMeLogged,
+
+    );
+    Navigator.pushReplacementNamed(context,  UserHome.routeName);
   }
+
+  Widget buildBlocConsumerMainButton(){
+     return  BlocConsumer<LoginCubit, LoginState>(
+       bloc: loginCubit,
+       listener: (context, state) {
+         if(state is LoginError){
+           buildShowToast(state.message);
+         }
+         else if(state is LoginSuccess){
+           buildShowToast(state.message);}
+       },
+       builder: (context, state) {
+         if(state is LoginLoading){
+           return const Center(child: CircularProgressIndicator());
+         }
+         return SizedBox(
+           width: double.infinity,
+           child: ElevatedButton(
+             onPressed: () {
+               login();
+             },
+             child: const Padding(
+               padding: EdgeInsets.all(8.0),
+               child: Text(
+                 'Login',
+                 style: TextStyle(fontSize: 20),
+               ),
+             ),
+           ),
+         );
+       },
+     );
+  }
+
 }
