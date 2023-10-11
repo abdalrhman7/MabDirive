@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/general_components/app_drawer.dart';
+import 'package:mab_drive/Features/Offers/View/Pages/ride_offers_page.dart';
 import 'package:mab_drive/Features/UserHome/View/components/drawer_button.dart';
 import 'package:mab_drive/Features/UserHome/View/components/mab.dart';
 import 'package:mab_drive/Features/UserHome/View/components/user_home_lower_part.dart';
@@ -16,6 +17,14 @@ class UserHome extends StatelessWidget {
     return BlocConsumer<UserHomeCubit, UserHomeState>(
       listener: (context, state) {
         // TODO: implement listener
+        if (state is AddRequestSussesState) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    RideOffersPage(rideRequestId: state.rideRequestId),
+              ));
+        }
       },
       builder: (context, state) {
         var cupit = UserHomeCubit.get(context);

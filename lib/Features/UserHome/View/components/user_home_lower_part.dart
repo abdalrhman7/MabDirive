@@ -2,8 +2,10 @@ import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
+import 'package:mab_drive/Core/general_components/build_show_toast.dart';
 import 'package:mab_drive/Core/general_components/defult_text_form_field.dart';
 import 'package:mab_drive/Core/general_components/main_button.dart';
+import 'package:mab_drive/Features/UserHome/Model/ride_request_model.dart';
 import 'package:mab_drive/Features/UserHome/View/components/edit_price_bottom_sheet.dart';
 import 'package:mab_drive/Features/UserHome/View/components/ride_car_type.dart';
 import 'package:mab_drive/Features/UserHome/View/components/text_form_button.dart';
@@ -157,7 +159,15 @@ class _UserHomeLowerPartState extends State<UserHomeLowerPart> {
             ),
             MainButton(
               text: "Find a driver",
-              onTap: () {},
+              onTap: () {
+                if (widget.cupit.pickupLocationAddress != null &&
+                    widget.cupit.destinationLocationAddress != null &&
+                    widget.cupit.priceOfTrip != null) {
+                  widget.cupit.addRequest(rideType: selectedType);
+                } else {
+                  buildShowToast("complete data to make request");
+                }
+              },
               color: ColorHelper.greenColor,
             )
           ],

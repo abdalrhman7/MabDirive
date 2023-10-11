@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -12,6 +14,7 @@ import 'package:mab_drive/Core/Database/remote/DioHelper/dio_helper.dart';
 import 'package:mab_drive/Core/configure_maps.dart';
 import 'package:mab_drive/Features/UserHome/Model/direction_model.dart'
     hide Polyline;
+import 'package:mab_drive/Features/UserHome/Model/ride_request_model.dart';
 import 'package:mab_drive/Features/location%20search/Model/search_prediction_model.dart';
 
 part 'user_home_state.dart';
@@ -204,6 +207,25 @@ class UserHomeCubit extends Cubit<UserHomeState> {
       emit(GetDirectionSussesState());
     }).catchError((onError) {
       emit(GetDirectionErrorState());
+    });
+  }
+
+  void addRequest({required String rideType}) {
+    RideRequestModel rideRequestModel = RideRequestModel(
+        destinationText: destinationLocationAddress,
+        picUpText: pickupLocationAddress,
+        rideType: rideType,
+        dateTime: DateTime.now().toString(),
+        targetPrice: priceOfTrip);
+    FirebaseFirestore.instance
+        .collection("RideRequests")
+        .add(rideRequestModel.toJson())
+        .then((value) {
+      debugPrint(value.id);
+      emit(AddRequestSussesState(rideRequestId: value.id));
+    }).catchError((onError) {
+      debugPrint(onError.toString());
+      emit(AddRequestErrorState());
     });
   }
 }

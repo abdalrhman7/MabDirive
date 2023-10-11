@@ -20,7 +20,7 @@ class MainButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 42.h,
+      height: 36.h,
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
@@ -28,10 +28,10 @@ class MainButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style:  TextStyle(
+          style: TextStyle(
             color: ColorHelper.darkColor,
             fontWeight: FontWeight.w500,
-            fontSize: 18.sp,
+            fontSize: 16.sp,
           ),
         ),
       ),

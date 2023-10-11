@@ -18,3 +18,10 @@ final class GetDirectionSussesState extends UserHomeState {}
 final class GetDirectionErrorState extends UserHomeState {}
 
 final class SetPriceSussesState extends UserHomeState {}
+
+final class AddRequestSussesState extends UserHomeState {
+  final String rideRequestId;
+  AddRequestSussesState({required this.rideRequestId});
+}
+
+final class AddRequestErrorState extends UserHomeState {}
