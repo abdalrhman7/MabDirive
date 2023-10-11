@@ -2,7 +2,7 @@ class RideRequestModel {
   // LatLanModel? pickUpLatLan;
   // LatLanModel? destinationLatLan;
   String? destinationText;
-  String? picUpText;
+  String? pickUpText;
   String? targetPrice;
   String? dateTime;
   String? rideType;
@@ -12,33 +12,35 @@ class RideRequestModel {
   RideRequestModel({
     //  required this.destinationLatLan,
     required this.destinationText,
-    required this.picUpText,
+    required this.pickUpText,
     // required this.pickUpLatLan,
     required this.targetPrice,
     required this.rideType,
     required this.dateTime,
   });
+
   RideRequestModel.fromJson(Map<String, dynamic> json) {
     destinationText = json['destinationText'];
-    picUpText = json['picUpText'];
+    pickUpText = json['pickUpText'];
     dateTime = json['dateTime'];
-    dateTime = json['rideType'];
+    rideType = json['rideType'];
     driverId = json['driverId'];
     targetPrice = json['targetPrice'];
-    // pickUpLatLan = LatLanModel.fromJson(json['pickUpLatLan']);
-    // destinationLatLan = LatLanModel.fromJson(json['destinationLatLan']);
+    if (json['offers'] != null) {
+      offers = List<DiveOfferPrice>.from(
+          json['offers'].map((offer) => DiveOfferPrice.fromJson(offer)));
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-
-    // data['pickUpLatLan'] = pickUpLatLan!.toJson();
-    // data['destinationLatLan'] = destinationLatLan!.toJson();
     data['destinationText'] = destinationText;
-    data['picUpText'] = picUpText;
+    data['pickUpText'] = pickUpText;
     data['dateTime'] = dateTime;
+    data['rideType'] = rideType;
     data['targetPrice'] = targetPrice;
     data['driverId'] = driverId;
+    data['offers'] = offers.map((offer) => offer.toJson()).toList();
     return data;
   }
 }
@@ -46,6 +48,7 @@ class RideRequestModel {
 class LatLanModel {
   String? latitude;
   String? longitude;
+
   LatLanModel({required this.latitude, required this.longitude});
 
   LatLanModel.fromJson(Map<String, dynamic> json) {
@@ -55,7 +58,6 @@ class LatLanModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-
     data['latitude'] = latitude;
     data['longitude'] = longitude;
     return data;
@@ -66,10 +68,12 @@ class DiveOfferPrice {
   String? driverName;
   String? driverId;
   String? offerPrice;
-  DiveOfferPrice(
-      {required this.driverName,
-      required this.driverId,
-      required this.offerPrice});
+
+  DiveOfferPrice({
+    required this.driverName,
+    required this.driverId,
+    required this.offerPrice,
+  });
 
   DiveOfferPrice.fromJson(Map<String, dynamic> json) {
     driverName = json['driverName'];
@@ -79,8 +83,7 @@ class DiveOfferPrice {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-
-    data['offerPrice'] = offerPrice;
+    data['driverName'] = driverName;
     data['driverId'] = driverId;
     data['offerPrice'] = offerPrice;
     return data;

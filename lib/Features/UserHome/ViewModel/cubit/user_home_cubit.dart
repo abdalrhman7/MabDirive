@@ -213,7 +213,7 @@ class UserHomeCubit extends Cubit<UserHomeState> {
   void addRequest({required String rideType}) {
     RideRequestModel rideRequestModel = RideRequestModel(
         destinationText: destinationLocationAddress,
-        picUpText: pickupLocationAddress,
+        pickUpText: pickupLocationAddress,
         rideType: rideType,
         dateTime: DateTime.now().toString(),
         targetPrice: priceOfTrip);
