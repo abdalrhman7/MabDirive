@@ -15,8 +15,8 @@ String price;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           border: Border.all(color:  Colors.white),
           borderRadius: BorderRadius.circular(20)
@@ -24,19 +24,19 @@ String price;
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Driver : $driverName',style: TextStyle(
+          Text('Driver : $driverName',style: const TextStyle(
               color: Colors.white,
               fontSize: 20
           ),),
-          Text('From : $from',style: TextStyle(
+          Text('From : $from',style: const TextStyle(
               color: Colors.white,
               fontSize: 20
           ),),
-          Text('To : $to',style: TextStyle(
+          Text('To : $to',style: const TextStyle(
               color: Colors.white,
               fontSize: 20
           ),),
-          Text('Price : $price',style: TextStyle(
+          Text('Price : $price',style: const TextStyle(
               color: Colors.white,
               fontSize: 20
           ),),

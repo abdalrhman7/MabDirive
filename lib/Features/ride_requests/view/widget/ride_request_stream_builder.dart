@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../Core/general_components/CustomCircularProgressIndicator.dart';
-import '../../model/ride_request.dart';
 import '../../view_model/ride_request_cubit/ride_request_cubit.dart';
 import 'customer_request_card.dart';
 

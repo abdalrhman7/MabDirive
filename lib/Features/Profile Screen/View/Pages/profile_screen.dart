@@ -1,19 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mab_drive/Core/general_components/custom_form_field.dart';
-import 'package:mab_drive/Features/ride_requests/view/widget/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../Core/Database/Firebse/my_database.dart';
-import '../../ViewModel/Profile Cubit/Profile_cubit.dart';
-import '../../ViewModel/profile_cubit.dart';
 import '../../ViewModel/profile_provider.dart';
 import '../Components/profile_text_field.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({super.key});
+  const ProfileScreen({super.key});
 
   static const String routeName = "profile";
 
@@ -91,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     fontSize: 20
                 ),),
-                label: Icon(Icons.logout),
+                label: const Icon(Icons.logout),
                 onPressed: () {},)
             ],
           ),

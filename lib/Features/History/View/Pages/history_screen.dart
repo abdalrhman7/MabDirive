@@ -9,16 +9,16 @@ static const String routeName = "history";
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white
         ),
-        title: Text('History',style: TextStyle(
+        title: const Text('History',style: TextStyle(
             color: Colors.white,
             fontSize: 25
         ),),
       ),
       body: ListView.separated(
-        separatorBuilder: (context, index) => SizedBox(height: 10,),
+        separatorBuilder: (context, index) => const SizedBox(height: 10,),
           itemCount: 10,
           itemBuilder: (context, index) {
             return HistoryItem(

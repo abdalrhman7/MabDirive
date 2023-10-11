@@ -1,11 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../Core/Database/Firebse/my_database.dart';
-import '../../../Profile Screen/ViewModel/profile_provider.dart';
 
 part 'login_state.dart';
 
