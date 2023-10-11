@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
 import 'package:mab_drive/Core/general_components/defult_text_form_field.dart';
 import 'package:mab_drive/Features/UserHome/ViewModel/cubit/user_home_cubit.dart';
+import 'package:mab_drive/Features/location%20search/View/components/search_card.dart';
 
 class SearchBottomSheet extends StatelessWidget {
   SearchBottomSheet(
@@ -73,34 +74,6 @@ class SearchBottomSheet extends StatelessWidget {
               ),
             );
           }),
-    );
-  }
-}
-
-class SearchCard extends StatelessWidget {
-  const SearchCard({
-    super.key,
-    required this.cupit,
-    required this.index,
-  });
-
-  final UserHomeCubit cupit;
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          cupit
-              .searchLocationPredictions[index].structuredFormatting!.mainText!,
-          style: TextStyle(color: Colors.white, fontSize: 18.sp),
-        ),
-        Text(
-            cupit.searchLocationPredictions[index].structuredFormatting!
-                .secondaryText!,
-            style: TextStyle(color: Colors.grey, fontSize: 12.sp)),
-      ],
     );
   }
 }

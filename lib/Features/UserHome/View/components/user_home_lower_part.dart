@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
 import 'package:mab_drive/Core/general_components/defult_text_form_field.dart';
 import 'package:mab_drive/Core/general_components/main_button.dart';
+import 'package:mab_drive/Features/UserHome/View/components/edit_price_bottom_sheet.dart';
 import 'package:mab_drive/Features/UserHome/View/components/ride_car_type.dart';
 import 'package:mab_drive/Features/UserHome/View/components/text_form_button.dart';
 import 'package:mab_drive/Features/UserHome/ViewModel/cubit/user_home_cubit.dart';
@@ -129,12 +130,27 @@ class _UserHomeLowerPartState extends State<UserHomeLowerPart> {
               },
             ),
             TextFormButton(
-              hintText: "Offer your fare",
+              hintText: widget.cupit.priceOfTrip ?? "Offer your fare",
               icon: Text(
                 "EGP",
                 style: TextStyle(color: Colors.grey, fontSize: 18.sp),
               ),
-              onTab: () {},
+              onTab: () {
+                showFlexibleBottomSheet(
+                  minHeight: 0,
+                  initHeight: 0.8,
+                  maxHeight: 1,
+                  context: context,
+                  bottomSheetColor: Colors.transparent,
+                  barrierColor: Colors.transparent,
+                  builder: (context, scrollController, bottomSheetOffset) =>
+                      PriceBottomSheet(
+                    scrollController: scrollController,
+                  ),
+                  anchors: [0, 0.5, 1],
+                  isSafeArea: true,
+                );
+              },
             ),
             SizedBox(
               height: 10.h,

@@ -22,6 +22,8 @@ class Mab extends StatelessWidget {
         myLocationEnabled: true,
         myLocationButtonEnabled: false,
         polylines: cupit.polyLinesSet,
+        markers: cupit.markersSet,
+        circles: cupit.circlesSet,
         initialCameraPosition: cupit.kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           cupit.controller.complete(controller);

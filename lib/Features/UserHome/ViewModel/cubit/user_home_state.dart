@@ -16,3 +16,5 @@ final class SetDestinationSussesState extends UserHomeState {}
 final class GetDirectionSussesState extends UserHomeState {}
 
 final class GetDirectionErrorState extends UserHomeState {}
+
+final class SetPriceSussesState extends UserHomeState {}

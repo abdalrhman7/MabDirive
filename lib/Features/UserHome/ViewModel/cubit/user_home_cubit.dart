@@ -73,6 +73,7 @@ class UserHomeCubit extends Cubit<UserHomeState> {
         desiredAccuracy: LocationAccuracy.high);
   }
 
+  String? priceOfTrip;
   String? pickupLocationAddress;
   String? destinationLocationAddress;
   void locatePosition() async {
@@ -134,7 +135,14 @@ class UserHomeCubit extends Cubit<UserHomeState> {
     emit(SetDestinationSussesState());
   }
 
+  setTripPrice(String price) {
+    priceOfTrip = price;
+    emit(SetPriceSussesState());
+  }
+
   Set<Polyline> polyLinesSet = {};
+  Set<Circle> circlesSet = {};
+  Set<Marker> markersSet = {};
   late DirectionModel directions;
   void getDirections() {
     polyLinesSet.clear();
@@ -147,8 +155,11 @@ class UserHomeCubit extends Cubit<UserHomeState> {
           "key": mapAndroidKey,
         }).then((value) {
       directions = DirectionModel.fromJson(value.data);
+
       debugPrint(value.data.toString());
       if (directions.routes!.isNotEmpty) {
+        priceOfTrip =
+            "${directions.routes!.first.legs!.first.distance!.value! / 200}";
         List<LatLng> plainCoordinates = [];
         List<PointLatLng> result = polylinePoints
             .decodePolyline(directions.routes!.first.overviewPolyline!.points!);
@@ -159,8 +170,11 @@ class UserHomeCubit extends Cubit<UserHomeState> {
         }
         CameraPosition cameraPosition =
             CameraPosition(target: plainCoordinates.last, zoom: 17);
-        newGoogleMapController
-            .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+        newGoogleMapController.animateCamera(CameraUpdate.newLatLngBounds(
+            LatLngBounds(
+                southwest: plainCoordinates.first,
+                northeast: plainCoordinates.last),
+            70));
         polyLinesSet.add(Polyline(
           polylineId: const PolylineId("PolylineId"),
           jointType: JointType.round,
@@ -171,6 +185,21 @@ class UserHomeCubit extends Cubit<UserHomeState> {
           endCap: Cap.roundCap,
           geodesic: true,
         ));
+
+        markersSet.add(Marker(
+            markerId: const MarkerId("pickupMarker"),
+            position: plainCoordinates.last,
+            icon:
+                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
+            infoWindow: InfoWindow(
+                title: pickupLocationAddress, snippet: "My location")));
+        markersSet.add(Marker(
+            markerId: const MarkerId("destinationMarker"),
+            position: plainCoordinates.first,
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueMagenta),
+            infoWindow: InfoWindow(
+                title: destinationLocationAddress, snippet: "Destination")));
       }
       emit(GetDirectionSussesState());
     }).catchError((onError) {
