@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../Core/general_components/CustomCircularProgressIndicator.dart';
 import '../../model/ride_request.dart';
@@ -11,26 +12,33 @@ class RideRequestStreamBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: StreamBuilder<List<RideRequest>>(
-        stream: BlocProvider.of<RideRequestCubit>(context).rideRequestStream(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            final requests = snapshot.data;
-            if (requests == null || requests.isEmpty) {
-              return const Center(
-                child: Text('No Requests Available'),
-              );
-            }
-            return ListView.builder(
-              itemCount: requests.length,
+    return BlocBuilder<RideRequestCubit, RideRequestState>(
+      buildWhen: (previous, current) =>
+          previous != current && current is RideRequestSuccess ||
+          previous != current && current is RideRequestInitial,
+      builder: (context, state) {
+        if (state is RideRequestInitial) {
+          return Center(
+            child: Text(
+              'Switch to online to get requests',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold),
+            ),
+          );
+        }
+        if (state is RideRequestSuccess) {
+          return Expanded(
+            child: ListView.builder(
+              itemCount: state.requests.length,
               itemBuilder: (context, index) =>
-                  CustomerRequestCard(rideRequest: requests[index]),
-            );
-          }
-          return const CustomCircularProgressIndicator();
-        },
-      ),
+                  CustomerRequestCard(rideRequest: state.requests[index]),
+            ),
+          );
+        }
+        return const CustomCircularProgressIndicator();
+      },
     );
   }
 }

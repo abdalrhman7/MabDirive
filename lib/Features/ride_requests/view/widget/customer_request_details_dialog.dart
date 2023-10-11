@@ -5,9 +5,11 @@ import 'package:mab_drive/Core/ColorHelper.dart';
 import '../../../../Core/general_components/main_button.dart';
 import '../../../UserHome/View/components/mab.dart';
 import '../../../UserHome/ViewModel/cubit/user_home_cubit.dart';
+import '../../model/ride_request.dart';
 
 Future customerRequestDetailsDialog({
   required BuildContext context,
+  required RideRequest rideRequest ,
 }) {
   return showGeneralDialog(
     context: context,
@@ -22,7 +24,7 @@ Future customerRequestDetailsDialog({
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(12.w)),
-          child: const Scaffold(body: CustomerRequestDetails()),
+          child:  Scaffold(body: CustomerRequestDetails(rideRequest: rideRequest,)),
         ),
       );
     },
@@ -30,8 +32,9 @@ Future customerRequestDetailsDialog({
 }
 
 class CustomerRequestDetails extends StatelessWidget {
-  const CustomerRequestDetails({super.key});
+  const CustomerRequestDetails({super.key, required this.rideRequest});
 
+  final RideRequest rideRequest;
   @override
   Widget build(BuildContext context) {
     var cubit = UserHomeCubit.get(context);
@@ -45,7 +48,7 @@ class CustomerRequestDetails extends StatelessWidget {
           ),
           SizedBox(height: 30.h),
           MainButton(
-            text: 'Agreed for 14 EGP',
+            text: 'Agreed for ${rideRequest.price} EGP',
             onTap: () {},
             color: ColorHelper.greenColor,
           ),
