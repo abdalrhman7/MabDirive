@@ -22,7 +22,9 @@ class TextFormButton extends StatelessWidget {
             width: 10.w,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              onTab.call();
+            },
             child: SizedBox(
                 width: 280.w,
                 child: Column(
@@ -31,9 +33,12 @@ class TextFormButton extends StatelessWidget {
                   children: [
                     Text(
                       hintText,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.grey, fontSize: 16.sp),
                     ),
-                    const Divider()
+                    const Divider(
+                      color: Colors.grey,
+                    )
                   ],
                 )),
           )

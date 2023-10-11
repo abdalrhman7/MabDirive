@@ -13,64 +13,64 @@ class UserHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => UserHomeCubit(),
-      child: BlocConsumer<UserHomeCubit, UserHomeState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
-        builder: (context, state) {
-          var cupit = UserHomeCubit.get(context);
-          return Scaffold(
-            drawer: const AppDrawer(currentPage: "UserHome"),
-            body: SizedBox(
-              height: 690.h,
-              child: Stack(children: [
-                Mab(cupit: cupit),
-                const CustomDrawerButton(),
-                Positioned(
-                  top: 30.h,
-                  right: 20.w,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.black.withOpacity(0.4),
-                    minRadius: 22.r,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.share,
-                        color: Colors.white,
-                        size: 22.r,
-                      ),
+    return BlocConsumer<UserHomeCubit, UserHomeState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        var cupit = UserHomeCubit.get(context);
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          drawer: const AppDrawer(currentPage: "UserHome"),
+          body: SizedBox(
+            height: 690.h,
+            child: Stack(children: [
+              Mab(cupit: cupit),
+              const CustomDrawerButton(),
+              Positioned(
+                top: 30.h,
+                right: 20.w,
+                child: CircleAvatar(
+                  backgroundColor: Colors.black.withOpacity(0.4),
+                  minRadius: 22.r,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.share,
+                      color: Colors.white,
+                      size: 22.r,
                     ),
                   ),
                 ),
-                Positioned(
-                  bottom: 310.h,
-                  right: 20.w,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.black.withOpacity(0.4),
-                    minRadius: 22.r,
-                    child: IconButton(
-                      onPressed: () {
-                        cupit.locatePosition();
-                      },
-                      icon: Icon(
-                        Icons.my_location_sharp,
-                        color: Colors.white,
-                        size: 22.r,
-                      ),
+              ),
+              Positioned(
+                bottom: 310.h,
+                right: 20.w,
+                child: CircleAvatar(
+                  backgroundColor: Colors.black.withOpacity(0.4),
+                  minRadius: 22.r,
+                  child: IconButton(
+                    onPressed: () {
+                      cupit.locatePosition();
+                    },
+                    icon: Icon(
+                      Icons.my_location_sharp,
+                      color: Colors.white,
+                      size: 22.r,
                     ),
                   ),
                 ),
-                const Positioned(
-                  bottom: 0,
-                  child: UserHomeLowerPart(),
+              ),
+              Positioned(
+                bottom: 0,
+                child: UserHomeLowerPart(
+                  cupit: cupit,
                 ),
-              ]),
-            ),
-          );
-        },
-      ),
+              ),
+            ]),
+          ),
+        );
+      },
     );
   }
 }
