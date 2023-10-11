@@ -11,7 +11,8 @@ class CustomerRequestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => customerRequestDetailsDialog(context: context),
+      onTap: () => customerRequestDetailsDialog(
+          context: context, rideRequest: rideRequest),
       child: SizedBox(
         width: double.infinity,
         height: 85.h,
@@ -21,21 +22,32 @@ class CustomerRequestCard extends StatelessWidget {
           ),
           color: const Color(0xff2C3333),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+            padding: EdgeInsets.only(left: 12.w, top: 2.h),
             child: Row(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    Container(
+                      height: 35.h,
+                      width: 40.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.w),
+                        color: Colors.white,
+                      ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20.w),
-                        child: Image.network(rideRequest.photo),
+                        child:
+                            Image.network(rideRequest.photo, fit: BoxFit.fill),
                       ),
                     ),
+                    SizedBox(height: 4.h),
                     Text(
                       rideRequest.name,
                       style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w500),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     const Text(
                       'now',

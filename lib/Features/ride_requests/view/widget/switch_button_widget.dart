@@ -1,53 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mab_drive/Features/ride_requests/view_model/ride_request_cubit/ride_request_cubit.dart';
 
 import '../../../../Core/ColorHelper.dart';
 
-class SwitchButtonWidget extends StatefulWidget {
+class SwitchButtonWidget extends StatelessWidget {
   const SwitchButtonWidget({super.key});
 
   @override
-  State<SwitchButtonWidget> createState() => _SwitchButtonWidgetState();
-}
-
-class _SwitchButtonWidgetState extends State<SwitchButtonWidget> {
-  bool isOffline = true;
-  @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          isOffline = !isOffline;
-        });
-      },
-      child: Container(
-        width: .22.sh,
-        height: .05.sh,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(22.w),
-          border: Border.all(
-              color:
-                  isOffline ? ColorHelper.mainColor : ColorHelper.greenColor),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 2.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Visibility(
-                visible: isOffline,
-                child: isOfflineButton(
-                    color: ColorHelper.mainColor, text: 'Offline'),
+    var cubit = BlocProvider.of<RideRequestCubit>(context);
+    return BlocBuilder<RideRequestCubit, RideRequestState>(
+      buildWhen: (previous, current) =>
+          previous != current && current is SwitchIsOfflineState,
+      builder: (context, state) {
+        return InkWell(
+          onTap: () {
+            cubit.switchIsOffline();
+          },
+          child: Container(
+            width: .22.sh,
+            height: .05.sh,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(22.w),
+              border: Border.all(
+                  color: cubit.isOffline
+                      ? ColorHelper.mainColor
+                      : ColorHelper.greenColor),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 2.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Visibility(
+                    visible: cubit.isOffline,
+                    child: isOfflineButton(
+                        color: ColorHelper.mainColor, text: 'Offline'),
+                  ),
+                  Visibility(
+                    visible: !cubit.isOffline,
+                    child: isOfflineButton(
+                        color: ColorHelper.greenColor, text: 'Online'),
+                  ),
+                ],
               ),
-              Visibility(
-                visible: !isOffline,
-                child: isOfflineButton(
-                    color: ColorHelper.greenColor, text: 'Online'),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

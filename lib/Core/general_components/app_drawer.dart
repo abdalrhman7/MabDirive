@@ -21,12 +21,12 @@ class AppDrawer extends StatelessWidget {
           const AccountDetailsWidget(),
           SizedBox(height: 14.h),
           InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, HistoryScreen.routeName);
               },
               child: buildListTile(icon: Icons.history, text: 'History')),
           InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, ProfileScreen.routeName);
               },
               child: buildListTile(icon: Icons.settings, text: 'Settings')),

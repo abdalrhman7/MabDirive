@@ -11,10 +11,27 @@ class RideRequestCubit extends Cubit<RideRequestState> {
 
   final FirestoreServices firestoreServices = FirestoreServices();
 
-  Stream<List<RideRequest>> rideRequestStream() {
-    return firestoreServices.collectionsStream(
-        path: 'request/',
-        builder: (data) => RideRequest.fromMap(data!),
-      );
+  bool isOffline = true;
+
+  void switchIsOffline() {
+    isOffline = !isOffline;
+    emit(SwitchIsOfflineState());
+    if (isOffline == false) {
+      getRequests();
+    } else {
+      emit(RideRequestInitial());
+    }
+  }
+
+  void getRequests() {
+    emit(RideRequestLoading());
+    firestoreServices
+        .collectionsStream(
+      path: 'request/',
+      builder: (data) => RideRequest.fromMap(data!),
+    )
+        .listen((event) {
+      emit(RideRequestSuccess(event));
+    });
   }
 }
