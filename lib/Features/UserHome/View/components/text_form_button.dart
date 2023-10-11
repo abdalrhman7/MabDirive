@@ -36,7 +36,9 @@ class TextFormButton extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.grey, fontSize: 16.sp),
                     ),
-                    const Divider()
+                    const Divider(
+                      color: Colors.grey,
+                    )
                   ],
                 )),
           )

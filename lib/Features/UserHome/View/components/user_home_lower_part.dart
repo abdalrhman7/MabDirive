@@ -107,9 +107,26 @@ class _UserHomeLowerPartState extends State<UserHomeLowerPart> {
               },
             ),
             TextFormButton(
-              hintText: "Destination",
+              hintText:
+                  widget.cupit.destinationLocationAddress ?? "Destination",
               icon: Icon(Icons.circle_outlined, size: 30.r, color: Colors.grey),
-              onTab: () {},
+              onTab: () {
+                showFlexibleBottomSheet(
+                  minHeight: 0,
+                  initHeight: 0.8,
+                  maxHeight: 1,
+                  context: context,
+                  bottomSheetColor: Colors.transparent,
+                  barrierColor: Colors.transparent,
+                  builder: (context, scrollController, bottomSheetOffset) =>
+                      SearchBottomSheet(
+                    scrollController: scrollController,
+                    searchText: "Destination",
+                  ),
+                  anchors: [0, 0.5, 1],
+                  isSafeArea: true,
+                );
+              },
             ),
             TextFormButton(
               hintText: "Offer your fare",
