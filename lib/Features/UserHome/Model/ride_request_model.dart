@@ -1,4 +1,5 @@
 class RideRequestModel {
+  String? docId;
   // LatLanModel? pickUpLatLan;
   // LatLanModel? destinationLatLan;
   String? destinationText;
@@ -9,17 +10,19 @@ class RideRequestModel {
   String driverId = "Waiting";
   List<DiveOfferPrice> offers = [];
 
-  RideRequestModel({
-    //  required this.destinationLatLan,
-    required this.destinationText,
-    required this.pickUpText,
-    // required this.pickUpLatLan,
-    required this.targetPrice,
-    required this.rideType,
-    required this.dateTime,
-  });
+  RideRequestModel(
+      {this.docId,
+      //  required this.destinationLatLan,
+      required this.destinationText,
+      required this.pickUpText,
+      // required this.pickUpLatLan,
+      required this.targetPrice,
+      required this.rideType,
+      required this.dateTime,
+      required this.offers});
 
-  RideRequestModel.fromJson(Map<String, dynamic> json) {
+  RideRequestModel.fromJson(Map<String, dynamic> json, [String? documentId]) {
+    docId = documentId;
     destinationText = json['destinationText'];
     pickUpText = json['pickUpText'];
     dateTime = json['dateTime'];
@@ -40,8 +43,27 @@ class RideRequestModel {
     data['rideType'] = rideType;
     data['targetPrice'] = targetPrice;
     data['driverId'] = driverId;
-    data['offers'] = offers.map((offer) => offer.toJson()).toList();
+    data['offers'] = offers!.map((offer) => offer.toJson()).toList();
     return data;
+  }
+
+  RideRequestModel copyWith({
+    String? destinationText,
+    String? pickUpText,
+    String? targetPrice,
+    String? dateTime,
+    String? rideType,
+    String? driverId,
+    List<DiveOfferPrice>? offers,
+  }) {
+    return RideRequestModel(
+      destinationText: destinationText ?? this.destinationText,
+      pickUpText: pickUpText ?? this.pickUpText,
+      targetPrice: targetPrice ?? this.targetPrice,
+      dateTime: dateTime ?? this.dateTime,
+      rideType: rideType ?? this.rideType,
+      offers: offers ?? this.offers,
+    );
   }
 }
 

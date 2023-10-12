@@ -4,11 +4,14 @@ import 'package:mab_drive/Core/ColorHelper.dart';
 import 'package:mab_drive/Core/general_components/main_button.dart';
 import 'package:mab_drive/Features/Offers/View/Components/PriceBox.dart';
 
+import '../../../UserHome/Model/ride_request_model.dart';
+
 class OfferCard extends StatelessWidget {
   const OfferCard({
-    super.key,
+    super.key, required this.diveOfferPrice,
   });
 
+  final DiveOfferPrice diveOfferPrice;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,9 +27,9 @@ class OfferCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Text(
-                  "Driver name: ",
-                  style: TextStyle(
+                 Text(
+                   diveOfferPrice.driverName!,
+                  style: const TextStyle(
                     color: Colors.white,
                     overflow: TextOverflow.ellipsis,
                     fontSize: 16.0,
@@ -37,7 +40,7 @@ class OfferCard extends StatelessWidget {
                 SizedBox(
                     height: 40.h,
                     width: 70.w,
-                    child: const PriceBox(price: "\$200")),
+                    child:  PriceBox(price: diveOfferPrice.offerPrice!)),
               ],
             ),
             const Spacer(),

@@ -8,7 +8,7 @@ class RideRequestInitial extends RideRequestState {}
 class RideRequestLoading extends RideRequestState {}
 
 class RideRequestSuccess extends RideRequestState {
-  final List<RideRequest> requests;
+  final List<RideRequestModel> requests;
 
   RideRequestSuccess(this.requests);
 }
