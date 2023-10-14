@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mab_drive/Features/ride_requests/model/ride_request.dart';
 
+import '../../../UserHome/Model/ride_request_model.dart';
+import '../../model/ride_request.dart';
 import 'customer_request_details_dialog.dart';
 
 class CustomerRequestCard extends StatelessWidget {
   const CustomerRequestCard({super.key, required this.rideRequest});
 
-  final RideRequest rideRequest;
+  final RideRequestModel rideRequest;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -15,7 +16,7 @@ class CustomerRequestCard extends StatelessWidget {
           context: context, rideRequest: rideRequest),
       child: SizedBox(
         width: double.infinity,
-        height: 85.h,
+        height: 90.h,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.w),
@@ -37,14 +38,15 @@ class CustomerRequestCard extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20.w),
-                        child:
-                            Image.network(rideRequest.photo, fit: BoxFit.fill),
+                        child: Image.network(
+                            'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg',
+                            fit: BoxFit.fill),
                       ),
                     ),
                     SizedBox(height: 4.h),
-                    Text(
-                      rideRequest.name,
-                      style: const TextStyle(
+                    const Text(
+                      'name',
+                      style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
@@ -57,21 +59,31 @@ class CustomerRequestCard extends StatelessWidget {
                 ),
                 SizedBox(width: 10.w),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      rideRequest.address,
-                      style: TextStyle(
+                    Container(
+                      constraints: BoxConstraints(maxWidth: .3.sh),
+                      child: Text(
+                        rideRequest.destinationText!,
+                        style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 14.sp),
+                          fontSize: 14.sp,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        maxLines: 1,
+                      ),
                     ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      'data data data',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.sp,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: .3.sh),
+                      child: Text(
+                        rideRequest.pickUpText!,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.sp,
+                            overflow: TextOverflow.ellipsis),
+                        maxLines: 2,
                       ),
                     ),
                     SizedBox(height: 4.h),
@@ -80,7 +92,7 @@ class CustomerRequestCard extends StatelessWidget {
                         style: TextStyle(color: Colors.white, fontSize: 14.sp),
                         children: [
                           TextSpan(
-                              text: rideRequest.price,
+                              text: rideRequest.targetPrice,
                               style: const TextStyle(color: Colors.redAccent)),
                           WidgetSpan(child: SizedBox(width: 8.w)),
                           const TextSpan(text: '~1K'),

@@ -215,7 +215,9 @@ class UserHomeCubit extends Cubit<UserHomeState> {
         pickUpText: pickupLocationAddress,
         rideType: rideType,
         dateTime: DateTime.now().toString(),
-        targetPrice: priceOfTrip);
+        targetPrice: priceOfTrip,
+        offers: [],
+    );
     FirebaseFirestore.instance
         .collection("RideRequests")
         .add(rideRequestModel.toJson())

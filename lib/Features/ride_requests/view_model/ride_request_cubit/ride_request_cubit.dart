@@ -3,6 +3,7 @@ import 'package:mab_drive/Features/ride_requests/model/ride_request.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../Core/Database/Firebse/firestore_services.dart';
+import '../../../UserHome/Model/ride_request_model.dart';
 
 part 'ride_request_state.dart';
 
@@ -27,11 +28,17 @@ class RideRequestCubit extends Cubit<RideRequestState> {
     emit(RideRequestLoading());
     firestoreServices
         .collectionsStream(
-      path: 'request/',
-      builder: (data) => RideRequest.fromMap(data!),
+      path: 'RideRequests/',
+      builder: (data, docId) => RideRequestModel.fromJson(data!, docId),
     )
         .listen((event) {
+          print('${event[0].docId}++++++++++++++++++++++++++++++++++++++++++');
       emit(RideRequestSuccess(event));
     });
+  }
+
+  void addOffer(RideRequestModel rideRequest, String docId) {
+    firestoreServices.setData(
+        path: 'RideRequests/$docId/', data: rideRequest.toJson());
   }
 }

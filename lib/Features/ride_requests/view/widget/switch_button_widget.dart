@@ -26,7 +26,7 @@ class SwitchButtonWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(22.w),
               border: Border.all(
                   color: cubit.isOffline
-                      ? ColorHelper.mainColor
+                      ? Colors.redAccent
                       : ColorHelper.greenColor),
             ),
             child: Padding(
@@ -37,7 +37,7 @@ class SwitchButtonWidget extends StatelessWidget {
                   Visibility(
                     visible: cubit.isOffline,
                     child: isOfflineButton(
-                        color: ColorHelper.mainColor, text: 'Offline'),
+                        color: Colors.redAccent, text: 'Offline'),
                   ),
                   Visibility(
                     visible: !cubit.isOffline,

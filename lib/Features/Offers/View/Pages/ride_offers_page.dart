@@ -29,14 +29,14 @@ class RideOffersPage extends StatelessWidget {
           builder: (context, state) {
             var cupit = RideOffersCubit.get(context);
             return ListView.separated(
-                itemBuilder: (context, index) => const Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: OfferCard(),
+                itemBuilder: (context, index) =>  Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: OfferCard(diveOfferPrice: cupit.driverOffers[index]),
                     ),
                 separatorBuilder: (context, index) => SizedBox(
                       height: 10.h,
                     ),
-                itemCount: 10);
+                itemCount: cupit.driverOffers.length);
           },
         ),
       ),
