@@ -131,7 +131,6 @@ bool keepMeLogged = false;
       keepMeLogin: keepMeLogged,
 
     );
-    Navigator.pushReplacementNamed(context,  UserHome.routeName);
   }
 
   Widget buildBlocConsumerMainButton(){
@@ -142,7 +141,11 @@ bool keepMeLogged = false;
            buildShowToast(state.message);
          }
          else if(state is LoginSuccess){
-           buildShowToast(state.message);}
+           buildShowToast(state.message);
+           Navigator.pushReplacementNamed(context,  UserHome.routeName);
+
+         }
+
        },
        builder: (context, state) {
          if(state is LoginLoading){
