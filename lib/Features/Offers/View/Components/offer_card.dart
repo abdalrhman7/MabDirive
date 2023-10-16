@@ -30,7 +30,7 @@ class OfferCard extends StatelessWidget {
         border: Border.all(color: ColorHelper.mainColor),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
             Row(
@@ -47,8 +47,10 @@ class OfferCard extends StatelessWidget {
                 const Spacer(),
                 SizedBox(
                     height: 40.h,
-                    width: 70.w,
-                    child: PriceBox(price: diveOfferPrice.offerPrice!)),
+                    width: 120.w,
+                    child: Center(
+                        child: PriceBox(
+                            price: "\$${diveOfferPrice.offerPrice!}"))),
               ],
             ),
             const Spacer(),

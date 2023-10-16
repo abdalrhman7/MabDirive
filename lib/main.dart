@@ -32,9 +32,9 @@ void main() async {
 
   await const FlutterSecureStorage().read(key: 'token').then((value) {
     if (value != null) {
-      LoginCubit.uid = value;
+      LoginCubit.user!.id = value;
     }
-    debugPrint(LoginCubit.uid);
+    debugPrint(LoginCubit.user!.id);
   });
   return runApp(ChangeNotifierProvider(
       create: (context) => AuthProvider(), child: MyApp()));

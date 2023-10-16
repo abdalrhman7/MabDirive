@@ -79,8 +79,9 @@ class _CustomerRequestDetailsState extends State<CustomerRequestDetails> {
                 requestModel = widget.rideRequest.copyWith(
                   offers: [
                     DiveOfferPrice(
-                      driverName: 'abdalrhman',
-                      driverId: LoginCubit.uid,
+                      driverPhone: LoginCubit.user.,
+                      driverName: LoginCubit.user!.name,
+                      driverId: LoginCubit.user!.id,
                       offerPrice: widget.rideRequest.targetPrice,
                     )
                   ],
@@ -128,8 +129,8 @@ class _CustomerRequestDetailsState extends State<CustomerRequestDetails> {
                   requestModel = widget.rideRequest.copyWith(
                     offers: [
                       DiveOfferPrice(
-                        driverName: 'abdalrhman',
-                        driverId: LoginCubit.uid,
+                        driverName: LoginCubit.user!.name,
+                        driverId: LoginCubit.user!.id,
                         offerPrice: offerController.text,
                       )
                     ],

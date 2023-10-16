@@ -10,15 +10,14 @@ part 'profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileInitial());
 
-
   static ProfileCubit get(BuildContext context) => BlocProvider.of(context);
 
-   MyUser.User? currentUser;
+  MyUser.UserModel? currentUser;
 
-  Future<MyUser.User?> getUserFromDataBase()async{
-    var user = await MyDataBase.readUser(FirebaseAuth.instance.currentUser?.uid ??"");
+  Future<MyUser.UserModel?> getUserFromDataBase() async {
+    var user =
+        await MyDataBase.readUser(FirebaseAuth.instance.currentUser?.uid ?? "");
     currentUser = user;
     return user;
   }
-
 }

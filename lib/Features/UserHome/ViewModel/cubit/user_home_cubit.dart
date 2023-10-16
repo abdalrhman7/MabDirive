@@ -84,7 +84,7 @@ class UserHomeCubit extends Cubit<UserHomeState> {
         LatLng(currentPosition.latitude, currentPosition.longitude);
 
     CameraPosition cameraPosition =
-        CameraPosition(target: latLngPosition, zoom: 17);
+        CameraPosition(target: latLngPosition, zoom: 14);
     newGoogleMapController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
     placemarkFromCoordinates(
@@ -171,12 +171,13 @@ class UserHomeCubit extends Cubit<UserHomeState> {
           plainCoordinates.add(tempLatLngPosition);
         }
         CameraPosition cameraPosition =
-            CameraPosition(target: plainCoordinates.last, zoom: 17);
+            CameraPosition(target: plainCoordinates.last, zoom: 14);
         newGoogleMapController.animateCamera(CameraUpdate.newLatLngBounds(
             LatLngBounds(
                 southwest: plainCoordinates.first,
                 northeast: plainCoordinates.last),
             70));
+
         polyLinesSet.add(Polyline(
           polylineId: const PolylineId("PolylineId"),
           jointType: JointType.round,

@@ -18,7 +18,7 @@ class PriceBox extends StatelessWidget {
         style: const TextStyle(
           color: Colors.white,
           overflow: TextOverflow.ellipsis,
-          fontSize: 16.0,
+          fontSize: 12.0,
           fontWeight: FontWeight.bold,
         ),
       ),

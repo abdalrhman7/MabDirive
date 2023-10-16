@@ -30,11 +30,13 @@ class RideOffersCubit extends Cubit<RideOffersState> {
     });
   }
 
-  acceptOffer(
-      {required DiveOfferPrice offer,
-      required String rideId,
-      required RideRequestModel requestModel}) {
+  acceptOffer({
+    required DiveOfferPrice offer,
+    required String rideId,
+    required RideRequestModel requestModel,
+  }) {
     requestModel.driverId = offer.driverId!;
+    requestModel.driverName = offer.driverName!;
     FirebaseFirestore.instance
         .collection("RideRequests")
         .doc(rideId)

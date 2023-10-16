@@ -21,7 +21,8 @@ class RegisterCubit extends Cubit<RegisterState> {
         password: password,
       );
 
-      var myUser = MyUser.User(id: result.user?.uid, name: name, email: email);
+      var myUser =
+          MyUser.UserModel(id: result.user?.uid, name: name, email: email);
       await MyDataBase.addUser(myUser);
       emit(RegisterSuccess('Success'));
     } on FirebaseAuthException catch (e) {

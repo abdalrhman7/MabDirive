@@ -8,6 +8,8 @@ class RideRequestModel {
   String? dateTime;
   String? rideType;
   String driverId = "Waiting";
+  String driverName = "Waiting";
+  String driverPhone = "Waiting";
   List<DiveOfferPrice> offers = [];
 
   RideRequestModel(
@@ -90,10 +92,11 @@ class DiveOfferPrice {
   String? driverName;
   String? driverId;
   String? offerPrice;
-
+  String? driverPhone;
   DiveOfferPrice({
     required this.driverName,
     required this.driverId,
+    required this.driverPhone,
     required this.offerPrice,
   });
 
@@ -101,6 +104,7 @@ class DiveOfferPrice {
     driverName = json['driverName'];
     driverId = json['driverId'];
     offerPrice = json['offerPrice'];
+    driverPhone = json['driverPhone'];
   }
 
   Map<String, dynamic> toJson() {
@@ -108,6 +112,7 @@ class DiveOfferPrice {
     data['driverName'] = driverName;
     data['driverId'] = driverId;
     data['offerPrice'] = offerPrice;
+    data['driverPhone'] = driverPhone;
     return data;
   }
 }

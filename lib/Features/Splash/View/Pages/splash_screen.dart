@@ -12,7 +12,9 @@ class SplashScreen extends StatelessWidget {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(
         context,
-        (LoginCubit.uid != '') ? UserHome.routeName : RegisterScreen.routeName,
+        (LoginCubit.user!.id != '')
+            ? UserHome.routeName
+            : RegisterScreen.routeName,
       );
     });
     return const Scaffold(
