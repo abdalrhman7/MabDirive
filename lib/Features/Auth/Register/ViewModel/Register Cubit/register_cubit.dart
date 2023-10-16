@@ -13,7 +13,9 @@ class RegisterCubit extends Cubit<RegisterState> {
   register(
       {required String email,
       required String name,
-      required String password}) async {
+      required String password,
+      required String phone,
+      }) async {
     emit(RegisterLoading());
     try {
       var result = await authService.createUserWithEmailAndPassword(
@@ -22,7 +24,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       );
 
       var myUser =
-          MyUser.UserModel(id: result.user?.uid, name: name, email: email);
+          MyUser.UserModel(id: result.user?.uid, name: name, email: email,phone: phone);
       await MyDataBase.addUser(myUser);
       emit(RegisterSuccess('Success'));
     } on FirebaseAuthException catch (e) {

@@ -7,6 +7,9 @@ import 'package:mab_drive/Features/UserHome/View/components/drawer_button.dart';
 import 'package:mab_drive/Features/UserHome/View/components/mab.dart';
 import 'package:mab_drive/Features/UserHome/View/components/user_home_lower_part.dart';
 import 'package:mab_drive/Features/UserHome/ViewModel/cubit/user_home_cubit.dart';
+import 'package:provider/provider.dart';
+
+import '../../../Profile Screen/ViewModel/profile_provider.dart';
 
 class UserHome extends StatelessWidget {
   const UserHome({super.key});
@@ -14,6 +17,8 @@ class UserHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<AuthProvider>(context, listen: false);
+    userProvider.getUserFromDataBase();
     return BlocConsumer<UserHomeCubit, UserHomeState>(
       listener: (context, state) {
         // TODO: implement listener
