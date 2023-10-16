@@ -8,10 +8,16 @@ import 'package:mab_drive/Features/Auth/Register/ViewModel/Register%20Cubit/regi
 import '../../../../../Core/general_components/build_show_toast.dart';
 import '../../../Login/View/Pages/login_screen.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});
 
   static const String routeName = "register";
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   Country textCountry = Country(
       phoneCode: '20',
       countryCode: 'EG',
@@ -25,10 +31,16 @@ class RegisterScreen extends StatelessWidget {
       e164Key: '20-EG-0');
 
   final TextEditingController rePasswordController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
+  final TextEditingController phoneController = TextEditingController();
   RegisterCubit registerCubit = RegisterCubit();
+
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -64,7 +76,33 @@ class RegisterScreen extends StatelessWidget {
                     validator: (value) => MyValidators.nameValidator(value),
                     controller: nameController),
                 const SizedBox(height: 20,),
-
+                CustomFormField(
+                  prefix: TextButton.icon(
+                      onPressed: (){
+                        showCountry(context);
+                      },
+                      icon:Text(textCountry.flagEmoji,style: TextStyle(
+                          fontSize: 35
+                      ),),
+                      label:Text('+${textCountry.phoneCode}',style: TextStyle(
+                          fontSize: 16
+                          ,color: Colors.white
+                      ),),),
+                  // Row(
+                  //   children: [
+                  //     Text(textCountry.flagEmoji,style: TextStyle(
+                  //       fontSize: 35
+                  //     ),),
+                  //     Text('+${textCountry.phoneCode}',style: TextStyle(
+                  //         fontSize: 17,color: Colors.white
+                  //     ),)
+                  //   ],
+                  // ),
+                    keyboardType: TextInputType.name,
+                    hintText: 'Enter Your Phone Number',
+                    validator: (value) => MyValidators.phoneValidator(value),
+                    controller: phoneController),
+                const SizedBox(height: 20,),
                 CustomFormField(
                     keyboardType: TextInputType.emailAddress,
                     hintText: 'Enter Your Email',
@@ -162,43 +200,43 @@ class RegisterScreen extends StatelessWidget {
     registerCubit.register(
         email: emailController.text,
         name: nameController.text,
-        password: passwordController.text
+        password: passwordController.text,
+      phone: phoneController.text
     );
   }
 
-  // void showCountry(BuildContext context) {
-  //   showCountryPicker(
-  //       context: context,
-  //       countryListTheme: CountryListThemeData(
-  //         flagSize: 25,
-  //         backgroundColor: Colors.white,
-  //         textStyle: const TextStyle(fontSize: 16, color: Colors.blueGrey),
-  //         bottomSheetHeight: 500,
-  //         // Optional. Country list modal height
-  //         //Optional. Sets the border radius for the bottomsheet.
-  //         borderRadius: const BorderRadius.only(
-  //           topLeft: Radius.circular(20.0),
-  //           topRight: Radius.circular(20.0),
-  //         ),
-  //         //Optional. Styles the search field.
-  //         inputDecoration: InputDecoration(
-  //           labelText: 'Search',
-  //           hintText: 'Start typing to search',
-  //           prefixIcon: const Icon(Icons.search),
-  //           border: OutlineInputBorder(
-  //             borderSide: BorderSide(
-  //               color: const Color(0xFF8C98A8).withOpacity(0.2),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       showPhoneCode: true,
-  //       onSelect: (Country country) {
-  //         setState(() {
-  //           textCountry = country;
-  //         });
-  //       });
-  // }
-
+  void showCountry(BuildContext context) {
+    showCountryPicker(
+        context: context,
+        countryListTheme: CountryListThemeData(
+          flagSize: 25,
+          backgroundColor: Colors.white,
+          textStyle: const TextStyle(fontSize: 16, color: Colors.blueGrey),
+          bottomSheetHeight: 500,
+          // Optional. Country list modal height
+          //Optional. Sets the border radius for the bottomsheet.
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+          //Optional. Styles the search field.
+          inputDecoration: InputDecoration(
+            labelText: 'Search',
+            hintText: 'Start typing to search',
+            prefixIcon: const Icon(Icons.search),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: const Color(0xFF8C98A8).withOpacity(0.2),
+              ),
+            ),
+          ),
+        ),
+        showPhoneCode: true,
+        onSelect: (Country country) {
+          setState(() {
+            textCountry = country;
+          });
+        });
+  }
 }
 

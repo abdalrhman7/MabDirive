@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mab_drive/Features/Auth/Login/ViewModel/login_cubit.dart';
 import 'package:provider/provider.dart';
 
+import '../../../Auth/Login/View/Pages/login_screen.dart';
 import '../../ViewModel/profile_provider.dart';
 import '../Components/profile_text_field.dart';
 
@@ -27,6 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var userProvider = Provider.of<AuthProvider>(context,listen: false);
     emailController.text = userProvider.email??'dd';
     nameController.text = userProvider.name??'ddd';
+    phoneController.text = userProvider.phone??"";
 
   });
   super.initState();
@@ -35,6 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<AuthProvider>(context,listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -85,7 +89,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     fontSize: 20
                 ),),
                 label: const Icon(Icons.logout),
-                onPressed: () {},)
+                onPressed: () {
+                  userProvider.logout();
+                  Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routeName,
+                          (route) => false);
+                },)
             ],
           ),
         ),

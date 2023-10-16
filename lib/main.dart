@@ -43,8 +43,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<AuthProvider>(context, listen: false);
-    userProvider.getUserFromDataBase();
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
