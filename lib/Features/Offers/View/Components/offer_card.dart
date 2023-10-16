@@ -3,15 +3,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
 import 'package:mab_drive/Core/general_components/main_button.dart';
 import 'package:mab_drive/Features/Offers/View/Components/PriceBox.dart';
+import 'package:mab_drive/Features/Offers/ViewModel/cubit/ride_offers_cubit.dart';
 
 import '../../../UserHome/Model/ride_request_model.dart';
 
 class OfferCard extends StatelessWidget {
   const OfferCard({
-    super.key, required this.diveOfferPrice,
+    super.key,
+    required this.diveOfferPrice,
+    required this.requestModel,
+    required this.cupit,
+    required this.rideId,
   });
 
   final DiveOfferPrice diveOfferPrice;
+  final RideRequestModel requestModel;
+  final RideOffersCubit cupit;
+  final String rideId;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,8 +35,8 @@ class OfferCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                 Text(
-                   diveOfferPrice.driverName!,
+                Text(
+                  diveOfferPrice.driverName!,
                   style: const TextStyle(
                     color: Colors.white,
                     overflow: TextOverflow.ellipsis,
@@ -40,7 +48,7 @@ class OfferCard extends StatelessWidget {
                 SizedBox(
                     height: 40.h,
                     width: 70.w,
-                    child:  PriceBox(price: diveOfferPrice.offerPrice!)),
+                    child: PriceBox(price: diveOfferPrice.offerPrice!)),
               ],
             ),
             const Spacer(),
@@ -53,7 +61,14 @@ class OfferCard extends StatelessWidget {
                 const Spacer(),
                 SizedBox(
                     width: 100.w,
-                    child: MainButton(text: "Accept", onTap: () {})),
+                    child: MainButton(
+                        text: "Accept",
+                        onTap: () {
+                          cupit.acceptOffer(
+                              offer: diveOfferPrice,
+                              rideId: rideId,
+                              requestModel: requestModel);
+                        })),
               ],
             ),
           ],

@@ -1,6 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,20 +32,18 @@ void main() async {
 
   await const FlutterSecureStorage().read(key: 'token').then((value) {
     if (value != null) {
-      LoginCubit.uid= value;
+      LoginCubit.uid = value;
     }
-    print(LoginCubit.uid);
+    debugPrint(LoginCubit.uid);
   });
-  return runApp(
-      ChangeNotifierProvider(
-          create: (BuildContext) => AuthProvider(),
-          child: MyApp()));
+  return runApp(ChangeNotifierProvider(
+      create: (context) => AuthProvider(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<AuthProvider>(context,listen: false);
+    var userProvider = Provider.of<AuthProvider>(context, listen: false);
     userProvider.getUserFromDataBase();
     return ScreenUtilInit(
       designSize: const Size(360, 690),

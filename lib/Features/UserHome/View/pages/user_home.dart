@@ -21,8 +21,9 @@ class UserHome extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    RideOffersPage(rideRequestId: state.rideRequestId),
+                builder: (context) => RideOffersPage(
+                    rideRequestId: state.rideRequestId,
+                    rideRequestModel: state.requestModel),
               ));
         }
       },

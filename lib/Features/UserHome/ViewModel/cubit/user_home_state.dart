@@ -21,7 +21,9 @@ final class SetPriceSussesState extends UserHomeState {}
 
 final class AddRequestSussesState extends UserHomeState {
   final String rideRequestId;
-  AddRequestSussesState({required this.rideRequestId});
+  final RideRequestModel requestModel;
+  AddRequestSussesState(
+      {required this.rideRequestId, required this.requestModel});
 }
 
 final class AddRequestErrorState extends UserHomeState {}

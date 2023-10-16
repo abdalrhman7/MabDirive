@@ -29,4 +29,20 @@ class RideOffersCubit extends Cubit<RideOffersState> {
       emit(GetOffersSuccessState());
     });
   }
+
+  acceptOffer(
+      {required DiveOfferPrice offer,
+      required String rideId,
+      required RideRequestModel requestModel}) {
+    requestModel.driverId = offer.driverId!;
+    FirebaseFirestore.instance
+        .collection("RideRequests")
+        .doc(rideId)
+        .update(requestModel.toJson())
+        .then((value) {
+      emit(AcceptOfferSuccessState());
+    }).catchError((onError) {
+      emit(AcceptOfferErrorState());
+    });
+  }
 }

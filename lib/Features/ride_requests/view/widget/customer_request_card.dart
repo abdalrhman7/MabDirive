@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../UserHome/Model/ride_request_model.dart';
-import '../../model/ride_request.dart';
 import 'customer_request_details_dialog.dart';
 
 class CustomerRequestCard extends StatelessWidget {

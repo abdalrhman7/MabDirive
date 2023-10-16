@@ -211,19 +211,20 @@ class UserHomeCubit extends Cubit<UserHomeState> {
 
   void addRequest({required String rideType}) {
     RideRequestModel rideRequestModel = RideRequestModel(
-        destinationText: destinationLocationAddress,
-        pickUpText: pickupLocationAddress,
-        rideType: rideType,
-        dateTime: DateTime.now().toString(),
-        targetPrice: priceOfTrip,
-        offers: [],
+      destinationText: destinationLocationAddress,
+      pickUpText: pickupLocationAddress,
+      rideType: rideType,
+      dateTime: DateTime.now().toString(),
+      targetPrice: priceOfTrip,
+      offers: [],
     );
     FirebaseFirestore.instance
         .collection("RideRequests")
         .add(rideRequestModel.toJson())
         .then((value) {
       debugPrint(value.id);
-      emit(AddRequestSussesState(rideRequestId: value.id));
+      emit(AddRequestSussesState(
+          rideRequestId: value.id, requestModel: rideRequestModel));
     }).catchError((onError) {
       debugPrint(onError.toString());
       emit(AddRequestErrorState());

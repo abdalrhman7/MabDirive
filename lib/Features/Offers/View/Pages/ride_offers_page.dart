@@ -4,10 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
 import 'package:mab_drive/Features/Offers/View/Components/offer_card.dart';
 import 'package:mab_drive/Features/Offers/ViewModel/cubit/ride_offers_cubit.dart';
+import 'package:mab_drive/Features/UserHome/Model/ride_request_model.dart';
 
 class RideOffersPage extends StatelessWidget {
-  const RideOffersPage({super.key, required this.rideRequestId});
+  const RideOffersPage(
+      {super.key, required this.rideRequestId, required this.rideRequestModel});
   final String rideRequestId;
+  final RideRequestModel rideRequestModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,9 +32,14 @@ class RideOffersPage extends StatelessWidget {
           builder: (context, state) {
             var cupit = RideOffersCubit.get(context);
             return ListView.separated(
-                itemBuilder: (context, index) =>  Padding(
+                itemBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: OfferCard(diveOfferPrice: cupit.driverOffers[index]),
+                      child: OfferCard(
+                        requestModel: rideRequestModel,
+                        diveOfferPrice: cupit.driverOffers[index],
+                        cupit: cupit,
+                        rideId: rideRequestId,
+                      ),
                     ),
                 separatorBuilder: (context, index) => SizedBox(
                       height: 10.h,

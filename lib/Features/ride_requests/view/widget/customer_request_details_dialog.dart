@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
+import 'package:mab_drive/Features/Auth/Login/ViewModel/login_cubit.dart';
 import 'package:mab_drive/Features/ride_requests/view_model/ride_request_cubit/ride_request_cubit.dart';
 
 import '../../../../Core/general_components/main_button.dart';
 import '../../../UserHome/Model/ride_request_model.dart';
 import '../../../UserHome/View/components/mab.dart';
 import '../../../UserHome/ViewModel/cubit/user_home_cubit.dart';
-import '../../model/ride_request.dart';
 
 Future customerRequestDetailsDialog({
   required BuildContext context,
@@ -40,7 +40,7 @@ Future customerRequestDetailsDialog({
 }
 
 class CustomerRequestDetails extends StatefulWidget {
-  CustomerRequestDetails({super.key, required this.rideRequest});
+  const CustomerRequestDetails({super.key, required this.rideRequest});
 
   final RideRequestModel rideRequest;
 
@@ -49,7 +49,14 @@ class CustomerRequestDetails extends StatefulWidget {
 }
 
 class _CustomerRequestDetailsState extends State<CustomerRequestDetails> {
-  final TextEditingController _offerController = TextEditingController();
+  late final TextEditingController offerController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    offerController =
+        TextEditingController(text: widget.rideRequest.targetPrice);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +75,21 @@ class _CustomerRequestDetailsState extends State<CustomerRequestDetails> {
             SizedBox(height: 30.h),
             MainButton(
               text: 'Agreed for ${widget.rideRequest.targetPrice} EGP',
-              onTap: () {},
+              onTap: () {
+                requestModel = widget.rideRequest.copyWith(
+                  offers: [
+                    DiveOfferPrice(
+                      driverName: 'abdalrhman',
+                      driverId: LoginCubit.uid,
+                      offerPrice: widget.rideRequest.targetPrice,
+                    )
+                  ],
+                );
+                setState(() {});
+                BlocProvider.of<RideRequestCubit>(context)
+                    .addOffer(requestModel, widget.rideRequest.docId!);
+                Navigator.of(context).pop();
+              },
               color: ColorHelper.greenColor,
             ),
             SizedBox(height: 10.h),
@@ -82,7 +103,7 @@ class _CustomerRequestDetailsState extends State<CustomerRequestDetails> {
             ),
             SizedBox(height: 10.h),
             TextFormField(
-              controller: _offerController,
+              controller: offerController,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 fillColor: Colors.white,
@@ -108,8 +129,8 @@ class _CustomerRequestDetailsState extends State<CustomerRequestDetails> {
                     offers: [
                       DiveOfferPrice(
                         driverName: 'abdalrhman',
-                        driverId: widget.rideRequest.driverId,
-                        offerPrice: _offerController.text,
+                        driverId: LoginCubit.uid,
+                        offerPrice: offerController.text,
                       )
                     ],
                   );

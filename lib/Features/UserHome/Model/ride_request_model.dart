@@ -43,7 +43,7 @@ class RideRequestModel {
     data['rideType'] = rideType;
     data['targetPrice'] = targetPrice;
     data['driverId'] = driverId;
-    data['offers'] = offers!.map((offer) => offer.toJson()).toList();
+    data['offers'] = offers.map((offer) => offer.toJson()).toList();
     return data;
   }
 
