@@ -28,6 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
       }
       var user = await MyDataBase.readUser(result.user?.uid ?? "");
       emit(LoginSuccess('Success'));
+
     } on FirebaseAuthException catch (e) {
       String errorMessage = 'Something Went Wrong';
       if (e.code == 'user-not-found') {

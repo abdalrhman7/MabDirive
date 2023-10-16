@@ -26,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
 
   WidgetsBinding.instance.addPostFrameCallback((timeStamp){
+
     var userProvider = Provider.of<AuthProvider>(context,listen: false);
     emailController.text = userProvider.email??'dd';
     nameController.text = userProvider.name??'ddd';
