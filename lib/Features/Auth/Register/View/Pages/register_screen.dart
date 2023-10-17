@@ -9,7 +9,7 @@ import '../../../../../Core/general_components/build_show_toast.dart';
 import '../../../Login/View/Pages/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({super.key});
+  const RegisterScreen({super.key});
 
   static const String routeName = "register";
 
@@ -46,6 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff171717),
       appBar: AppBar(
         elevation: 0,
@@ -69,73 +70,81 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   'Please enter your details',
                   style: TextStyle(color: Colors.white60, fontSize: 16),
                 ),
-                const SizedBox(height: 40,),
+                const SizedBox(
+                  height: 40,
+                ),
                 CustomFormField(
                     keyboardType: TextInputType.name,
                     hintText: 'Enter Your Name',
                     validator: (value) => MyValidators.nameValidator(value),
                     controller: nameController),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 CustomFormField(
-                  prefix: TextButton.icon(
-                      onPressed: (){
+                    prefix: TextButton.icon(
+                      onPressed: () {
                         showCountry(context);
                       },
-                      icon:Text(textCountry.flagEmoji,style: TextStyle(
-                          fontSize: 35
-                      ),),
-                      label:Text('+${textCountry.phoneCode}',style: TextStyle(
-                          fontSize: 16
-                          ,color: Colors.white
-                      ),),),
-                  // Row(
-                  //   children: [
-                  //     Text(textCountry.flagEmoji,style: TextStyle(
-                  //       fontSize: 35
-                  //     ),),
-                  //     Text('+${textCountry.phoneCode}',style: TextStyle(
-                  //         fontSize: 17,color: Colors.white
-                  //     ),)
-                  //   ],
-                  // ),
+                      icon: Text(
+                        textCountry.flagEmoji,
+                        style: const TextStyle(fontSize: 35),
+                      ),
+                      label: Text(
+                        '+${textCountry.phoneCode}',
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
+                    // Row(
+                    //   children: [
+                    //     Text(textCountry.flagEmoji,style: TextStyle(
+                    //       fontSize: 35
+                    //     ),),
+                    //     Text('+${textCountry.phoneCode}',style: TextStyle(
+                    //         fontSize: 17,color: Colors.white
+                    //     ),)
+                    //   ],
+                    // ),
                     keyboardType: TextInputType.name,
                     hintText: 'Enter Your Phone Number',
                     validator: (value) => MyValidators.phoneValidator(value),
                     controller: phoneController),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 CustomFormField(
                     keyboardType: TextInputType.emailAddress,
                     hintText: 'Enter Your Email',
                     validator: (value) => MyValidators.emailValidator(value),
                     controller: emailController),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 CustomFormField(
                     hintText: 'Enter Your password',
                     validator: (value) => MyValidators.passwordValidator(value),
                     controller: passwordController),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 CustomFormField(
                     hintText: 'Enter password confirmation',
-                    validator: (value) =>
-                        MyValidators.repeatPasswordValidator(
-                            value: value, password: passwordController.text),
+                    validator: (value) => MyValidators.repeatPasswordValidator(
+                        value: value, password: passwordController.text),
                     controller: rePasswordController),
-                const SizedBox(height: 40,),
-
-
-
+                const SizedBox(
+                  height: 40,
+                ),
                 BlocConsumer<RegisterCubit, RegisterState>(
                   bloc: registerCubit,
-                  listener: (context, state) {
-                  },
+                  listener: (context, state) {},
                   builder: (context, state) {
-                    if(state is RegisterLoading){
+                    if (state is RegisterLoading) {
                       return const Center(child: CircularProgressIndicator());
-                    }
-                    else if(state is RegisterError){
+                    } else if (state is RegisterError) {
                       buildShowToast(state.message);
-                    }
-                    else if(state is RegisterSuccess){
+                    } else if (state is RegisterSuccess) {
                       buildShowToast(state.message);
                       return SizedBox(
                         width: double.infinity,
@@ -173,14 +182,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Allready Have an Account ? " ,
+                    const Text(
+                      "Allready Have an Account ? ",
                       style: TextStyle(
-                        color:Color(0xffEDEDED),
+                        color: Color(0xffEDEDED),
                       ),
                     ),
                     TextButton(
-                        onPressed: (){
-                          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, LoginScreen.routeName);
                         },
                         child: const Text("Login")),
                   ],
@@ -193,7 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void register()async{
+  void register() async {
     if (formKey.currentState?.validate() == false) {
       return;
     }
@@ -201,8 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         email: emailController.text,
         name: nameController.text,
         password: passwordController.text,
-      phone: phoneController.text
-    );
+        phone: phoneController.text);
   }
 
   void showCountry(BuildContext context) {
@@ -239,4 +249,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
         });
   }
 }
-

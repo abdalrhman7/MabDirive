@@ -33,8 +33,9 @@ class RideOffersPage extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        WaiteDriverScreen(rideRequestModel: rideRequestModel),
+                    builder: (context) => WaiteDriverScreen(
+                        rideRequestModel: rideRequestModel,
+                        rideRequestId: rideRequestId),
                   ));
             }
           },

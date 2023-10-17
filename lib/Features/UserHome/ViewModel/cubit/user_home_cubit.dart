@@ -84,7 +84,7 @@ class UserHomeCubit extends Cubit<UserHomeState> {
         LatLng(currentPosition.latitude, currentPosition.longitude);
 
     CameraPosition cameraPosition =
-        CameraPosition(target: latLngPosition, zoom: 14);
+        CameraPosition(target: latLngPosition, zoom: 17);
     newGoogleMapController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
     placemarkFromCoordinates(
@@ -148,6 +148,8 @@ class UserHomeCubit extends Cubit<UserHomeState> {
   late DirectionModel directions;
   void getDirections() {
     polyLinesSet.clear();
+    circlesSet.clear();
+    markersSet.clear();
     PolylinePoints polylinePoints = PolylinePoints();
     DioHelper.getData(
         url: "https://maps.googleapis.com/maps/api/directions/json",
@@ -170,13 +172,6 @@ class UserHomeCubit extends Cubit<UserHomeState> {
               LatLng(element.latitude, element.longitude);
           plainCoordinates.add(tempLatLngPosition);
         }
-        CameraPosition cameraPosition =
-            CameraPosition(target: plainCoordinates.last, zoom: 14);
-        newGoogleMapController.animateCamera(CameraUpdate.newLatLngBounds(
-            LatLngBounds(
-                southwest: plainCoordinates.first,
-                northeast: plainCoordinates.last),
-            70));
 
         polyLinesSet.add(Polyline(
           polylineId: const PolylineId("PolylineId"),
@@ -203,6 +198,15 @@ class UserHomeCubit extends Cubit<UserHomeState> {
                 BitmapDescriptor.hueMagenta),
             infoWindow: InfoWindow(
                 title: destinationLocationAddress, snippet: "Destination")));
+
+        LatLngBounds latLngBounds = LatLngBounds(
+          southwest: plainCoordinates.first,
+          northeast: plainCoordinates.last,
+        );
+        newGoogleMapController.animateCamera(CameraUpdate.newLatLngBounds(
+          latLngBounds,
+          70.0,
+        ));
       }
       emit(GetDirectionSussesState());
     }).catchError((onError) {

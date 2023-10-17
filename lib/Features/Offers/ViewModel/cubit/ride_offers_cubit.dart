@@ -47,4 +47,16 @@ class RideOffersCubit extends Cubit<RideOffersState> {
       emit(AcceptOfferErrorState());
     });
   }
+
+  cancelRideRequest(String rideRequestId) {
+    FirebaseFirestore.instance
+        .collection("RideRequests")
+        .doc(rideRequestId)
+        .delete()
+        .then((value) {
+      emit(CancelRideSuccessState());
+    }).catchError((onError) {
+      emit(CancelRideErrorState());
+    });
+  }
 }
