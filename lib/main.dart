@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
           title: 'MAB Drive',
           initialRoute: SplashScreen.routeName,
           routes: {
-            RegisterScreen.routeName: (_) => RegisterScreen(),
+            RegisterScreen.routeName: (_) => const RegisterScreen(),
             LoginScreen.routeName: (_) => const LoginScreen(),
             SplashScreen.routeName: (_) => const SplashScreen(),
             OnBoarding.routeName: (_) => const OnBoarding(),

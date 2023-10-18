@@ -7,14 +7,16 @@ class Mab extends StatelessWidget {
   const Mab({
     super.key,
     required this.cupit,
+    required this.height,
   });
 
   final UserHomeCubit cupit;
+  final int height;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 410.h,
+      height: height.h,
       child: GoogleMap(
         padding: EdgeInsets.only(bottom: 20.h),
         mapType: MapType.hybrid,

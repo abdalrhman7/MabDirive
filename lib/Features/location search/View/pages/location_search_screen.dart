@@ -49,12 +49,12 @@ class SearchBottomSheet extends StatelessWidget {
                               cupit.setDestination(cupit
                                   .searchLocationPredictions[index]
                                   .structuredFormatting!
-                                  .mainText!);
+                                  .secondaryText!);
                             } else {
                               cupit.setPickup(cupit
                                   .searchLocationPredictions[index]
                                   .structuredFormatting!
-                                  .mainText!);
+                                  .secondaryText!);
                             }
                           },
                           child: SearchCard(

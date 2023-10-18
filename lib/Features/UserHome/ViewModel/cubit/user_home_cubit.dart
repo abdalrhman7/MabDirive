@@ -78,7 +78,7 @@ class UserHomeCubit extends Cubit<UserHomeState> {
   String? priceOfTrip;
   String? pickupLocationAddress;
   String? destinationLocationAddress;
-  void locatePosition() async {
+  locatePosition() async {
     currentPosition = await determinePosition();
     LatLng latLngPosition =
         LatLng(currentPosition.latitude, currentPosition.longitude);
@@ -97,7 +97,7 @@ class UserHomeCubit extends Cubit<UserHomeState> {
   }
 
   List<SearchLocationPrediction> searchLocationPredictions = [];
-  void searchLocation(String searchKey) async {
+  searchLocation(String searchKey) {
     searchLocationPredictions = [];
     DioHelper.getData(
         url: "https://maps.googleapis.com/maps/api/place/autocomplete/json",
@@ -146,7 +146,7 @@ class UserHomeCubit extends Cubit<UserHomeState> {
   Set<Circle> circlesSet = {};
   Set<Marker> markersSet = {};
   late DirectionModel directions;
-  void getDirections() {
+  getDirections({String? destination}) {
     polyLinesSet.clear();
     circlesSet.clear();
     markersSet.clear();
@@ -155,7 +155,7 @@ class UserHomeCubit extends Cubit<UserHomeState> {
         url: "https://maps.googleapis.com/maps/api/directions/json",
         queryParameters: {
           "destination": pickupLocationAddress,
-          "origin": destinationLocationAddress,
+          "origin": destination ?? destinationLocationAddress,
           "key": mapAndroidKey,
         }).then((value) {
       directions = DirectionModel.fromJson(value.data);

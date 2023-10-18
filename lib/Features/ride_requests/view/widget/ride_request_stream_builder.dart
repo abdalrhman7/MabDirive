@@ -7,8 +7,8 @@ import '../../view_model/ride_request_cubit/ride_request_cubit.dart';
 import 'customer_request_card.dart';
 
 class RideRequestStreamBuilder extends StatelessWidget {
-  const RideRequestStreamBuilder({super.key});
-
+  const RideRequestStreamBuilder({super.key, required this.cupit});
+  final RideRequestCubit cupit;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RideRequestCubit, RideRequestState>(
@@ -31,8 +31,10 @@ class RideRequestStreamBuilder extends StatelessWidget {
           return Expanded(
             child: ListView.builder(
               itemCount: state.requests.length,
-              itemBuilder: (context, index) =>
-                  CustomerRequestCard(rideRequest: state.requests[index]),
+              itemBuilder: (context, index) => CustomerRequestCard(
+                rideRequest: state.requests[index],
+                cupit: cupit,
+              ),
             ),
           );
         }

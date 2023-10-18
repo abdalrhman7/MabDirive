@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mab_drive/Features/ride_requests/view_model/ride_request_cubit/ride_request_cubit.dart';
 
 import '../../../UserHome/Model/ride_request_model.dart';
 import 'customer_request_details_dialog.dart';
 
 class CustomerRequestCard extends StatelessWidget {
-  const CustomerRequestCard({super.key, required this.rideRequest});
+  const CustomerRequestCard(
+      {super.key, required this.rideRequest, required this.cupit});
+  final RideRequestCubit cupit;
 
   final RideRequestModel rideRequest;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => customerRequestDetailsDialog(
-          context: context, rideRequest: rideRequest),
+          context: context, rideRequest: rideRequest, cupit: cupit),
       child: SizedBox(
         width: double.infinity,
         height: 90.h,
@@ -26,7 +29,8 @@ class CustomerRequestCard extends StatelessWidget {
             child: Row(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       height: 35.h,
@@ -43,22 +47,25 @@ class CustomerRequestCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 4.h),
-                    const Text(
-                      'name',
-                      style: TextStyle(
+                    Text(
+                      rideRequest.rideType!,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const Text(
-                      'now',
-                      style: TextStyle(color: Colors.grey),
+                    Text(
+                      formatTimeDifference(
+                          DateTime.parse(rideRequest.dateTime!),
+                          DateTime.now()),
+                      style: const TextStyle(color: Colors.grey),
                     ),
                   ],
                 ),
                 SizedBox(width: 10.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       constraints: BoxConstraints(maxWidth: .3.sh),
@@ -106,5 +113,22 @@ class CustomerRequestCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+String formatTimeDifference(DateTime date1, DateTime date2) {
+  Duration difference = date2.difference(date1);
+
+  if (difference.inSeconds < 60) {
+    return '${difference.inSeconds} sec ago';
+  } else if (difference.inMinutes < 60) {
+    return '${difference.inMinutes} min ago';
+  } else if (difference.inHours < 24) {
+    return '${difference.inHours} h ago';
+  } else if (difference.inDays < 7) {
+    return '${difference.inDays} days ago';
+  } else {
+    int weeks = difference.inDays ~/ 7;
+    return '$weeks weeks ago';
   }
 }

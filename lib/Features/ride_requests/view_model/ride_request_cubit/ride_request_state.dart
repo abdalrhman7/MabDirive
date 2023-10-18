@@ -14,3 +14,8 @@ class RideRequestSuccess extends RideRequestState {
 }
 
 class SwitchIsOfflineState extends RideRequestState {}
+
+class YourOfferAcceptedState extends RideRequestState {
+  RideRequestModel requestModel;
+  YourOfferAcceptedState({required this.requestModel});
+}

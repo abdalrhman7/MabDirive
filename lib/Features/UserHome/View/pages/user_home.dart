@@ -40,7 +40,7 @@ class UserHome extends StatelessWidget {
           body: SizedBox(
             height: 690.h,
             child: Stack(children: [
-              Mab(cupit: cupit),
+              Mab(cupit: cupit, height: 410),
               const CustomDrawerButton(),
               Positioned(
                 top: 30.h,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mab_drive/Features/Auth/Login/ViewModel/login_cubit.dart';
 
 class AccountDetailsWidget extends StatelessWidget {
   const AccountDetailsWidget({
@@ -18,7 +19,7 @@ class AccountDetailsWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Name',
+              Text(LoginCubit.user.name!,
                   style: TextStyle(color: Colors.white, fontSize: 14.sp)),
               RatingBar.builder(
                 itemSize: 16.0,

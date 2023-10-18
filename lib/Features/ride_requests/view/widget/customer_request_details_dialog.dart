@@ -10,10 +10,10 @@ import '../../../UserHome/Model/ride_request_model.dart';
 import '../../../UserHome/View/components/mab.dart';
 import '../../../UserHome/ViewModel/cubit/user_home_cubit.dart';
 
-Future customerRequestDetailsDialog({
-  required BuildContext context,
-  required RideRequestModel rideRequest,
-}) {
+Future customerRequestDetailsDialog(
+    {required BuildContext context,
+    required RideRequestModel rideRequest,
+    required RideRequestCubit cupit}) {
   return showGeneralDialog(
     context: context,
     barrierDismissible: true,
@@ -31,6 +31,7 @@ Future customerRequestDetailsDialog({
               body: SingleChildScrollView(
             child: CustomerRequestDetails(
               rideRequest: rideRequest,
+              rideCupit: cupit,
             ),
           )),
         ),
@@ -40,9 +41,11 @@ Future customerRequestDetailsDialog({
 }
 
 class CustomerRequestDetails extends StatefulWidget {
-  const CustomerRequestDetails({super.key, required this.rideRequest});
+  const CustomerRequestDetails(
+      {super.key, required this.rideRequest, required this.rideCupit});
 
   final RideRequestModel rideRequest;
+  final RideRequestCubit rideCupit;
 
   @override
   State<CustomerRequestDetails> createState() => _CustomerRequestDetailsState();
@@ -62,108 +65,92 @@ class _CustomerRequestDetailsState extends State<CustomerRequestDetails> {
   Widget build(BuildContext context) {
     var cubit = UserHomeCubit.get(context);
     late RideRequestModel requestModel;
-    return BlocProvider(
-      create: (context) => RideRequestCubit(),
-      child: Padding(
-        padding: EdgeInsets.all(10.r),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 0.45.sh,
-              child: Mab(cupit: cubit),
+    return Padding(
+      padding: EdgeInsets.all(10.r),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 0.45.sh,
+            child: Mab(cupit: cubit, height: 410),
+          ),
+          SizedBox(height: 30.h),
+          MainButton(
+            text: 'Agreed for ${widget.rideRequest.targetPrice} EGP',
+            onTap: () {
+              requestModel = widget.rideRequest.copyWith(
+                offers: [
+                  DiveOfferPrice(
+                    driverPhone: LoginCubit.user.phone,
+                    driverName: LoginCubit.user.name,
+                    driverId: LoginCubit.user.id,
+                    offerPrice: offerController.text,
+                  )
+                ],
+              );
+              setState(() {});
+              widget.rideCupit
+                  .addOffer(requestModel, widget.rideRequest.docId!);
+              widget.rideCupit
+                  .listenOffer(rideRequestId: widget.rideRequest.docId!);
+              Navigator.of(context).pop();
+            },
+            color: ColorHelper.greenColor,
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            'offer your price :',
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
             ),
-            SizedBox(height: 30.h),
-            MainButton(
-              text: 'Agreed for ${widget.rideRequest.targetPrice} EGP',
+          ),
+          SizedBox(height: 10.h),
+          TextFormField(
+            controller: offerController,
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              fillColor: Colors.white,
+              hintText: 'Your offer',
+              hintStyle: const TextStyle(color: Colors.grey),
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(12.w)),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(12.w)),
+            ),
+          ),
+          SizedBox(height: 10.h),
+          Builder(builder: (context) {
+            return MainButton(
+              text: 'Send offer',
               onTap: () {
                 requestModel = widget.rideRequest.copyWith(
                   offers: [
                     DiveOfferPrice(
-                      driverPhone: LoginCubit.user.phone,
                       driverName: LoginCubit.user.name,
                       driverId: LoginCubit.user.id,
-                      offerPrice: widget.rideRequest.targetPrice,
+                      offerPrice: offerController.text,
+                      driverPhone: LoginCubit.user.phone,
                     )
                   ],
                 );
                 setState(() {});
-                BlocProvider.of<RideRequestCubit>(context)
+                widget.rideCupit
                     .addOffer(requestModel, widget.rideRequest.docId!);
+                widget.rideCupit
+                    .listenOffer(rideRequestId: widget.rideRequest.docId!);
                 Navigator.of(context).pop();
               },
               color: ColorHelper.greenColor,
-            ),
-            SizedBox(height: 10.h),
-            Text(
-              'offer your price :',
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 10.h),
-            TextFormField(
-              controller: offerController,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                hintText: 'Your offer',
-                hintStyle: const TextStyle(color: Colors.grey),
-                border: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(12.w)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(12.w)),
-              ),
-            ),
-            SizedBox(height: 10.h),
-            Builder(builder: (context) {
-              return MainButton(
-                text: 'Send offer',
-                onTap: () {
-                  requestModel = widget.rideRequest.copyWith(
-                    offers: [
-                      DiveOfferPrice(
-                        driverName: LoginCubit.user.name,
-                        driverId: LoginCubit.user.id,
-                        offerPrice: offerController.text,
-                        driverPhone: '',
-                      )
-                    ],
-                  );
-                  setState(() {});
-                  BlocProvider.of<RideRequestCubit>(context)
-                      .addOffer(requestModel, widget.rideRequest.docId!);
-                  Navigator.of(context).pop();
-                },
-                color: ColorHelper.greenColor,
-              );
-            })
-          ],
-        ),
+            );
+          })
+        ],
       ),
     );
   }
 }
-
-// RideRequestModel requestModel = RideRequestModel(
-//     dateTime: DateTime.now.toString(),
-//     destinationText: 'ay hage ',
-//     pickUpText: ' ',
-//     rideType: 'zz',
-//     targetPrice: '02',
-//     offers: [
-//       DiveOfferPrice(
-//         driverName: 'abdalrhman',
-//         driverId: rideRequest.driverId,
-//         offerPrice: _offerController.text,
-//       ),
-//     ]);
-//
-// BlocProvider.of<RideRequestCubit>(context)
-// .addOffer(requestModel);
