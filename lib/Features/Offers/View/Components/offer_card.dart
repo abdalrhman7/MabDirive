@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mab_drive/Core/ColorHelper.dart';
+import 'package:mab_drive/Core/Database/Firebse/my_database.dart';
 import 'package:mab_drive/Core/general_components/main_button.dart';
+import 'package:mab_drive/Features/History/Models/history_model.dart';
 import 'package:mab_drive/Features/Offers/View/Components/PriceBox.dart';
 import 'package:mab_drive/Features/Offers/ViewModel/cubit/ride_offers_cubit.dart';
+import 'package:provider/provider.dart';
 
+import '../../../Profile Screen/ViewModel/profile_provider.dart';
 import '../../../UserHome/Model/ride_request_model.dart';
 
 class OfferCard extends StatelessWidget {
@@ -66,6 +70,7 @@ class OfferCard extends StatelessWidget {
                     child: MainButton(
                         text: "Accept",
                         onTap: () {
+                          addHistory(context);
                           cupit.acceptOffer(
                               offer: diveOfferPrice,
                               rideId: rideId,
@@ -77,5 +82,19 @@ class OfferCard extends StatelessWidget {
         ),
       ),
     );
+
+
   }
+  void addHistory(BuildContext context)async{
+
+    var authProvider = Provider.of<AuthProvider>(context, listen: false);
+    HistoryModel historyModel = HistoryModel(
+      driverName:  diveOfferPrice.driverName,
+      price: diveOfferPrice.offerPrice,
+      destination: requestModel.destinationText
+    );
+     await MyDataBase.addHistory(authProvider.currentUser?.id??'',
+         historyModel);
+  }
+
 }

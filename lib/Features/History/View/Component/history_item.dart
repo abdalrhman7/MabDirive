@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mab_drive/Features/History/Models/history_model.dart';
 
 class HistoryItem extends StatelessWidget {
    HistoryItem({super.key,
-  required this.price,
-    required this.driverName,
-    required this.from,
-    required this.to
-  });
-String driverName;
-String from;
-String to;
-String price;
 
+     required this.historyModel
+  });
+
+HistoryModel historyModel;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,19 +20,16 @@ String price;
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Driver : $driverName',style: const TextStyle(
+          Text('Driver : ${historyModel.driverName}',style: const TextStyle(
               color: Colors.white,
               fontSize: 20
           ),),
-          Text('From : $from',style: const TextStyle(
+
+          Text('To : ${historyModel.destination}',style: const TextStyle(
               color: Colors.white,
               fontSize: 20
           ),),
-          Text('To : $to',style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20
-          ),),
-          Text('Price : $price',style: const TextStyle(
+          Text('Price : ${historyModel.price}',style: const TextStyle(
               color: Colors.white,
               fontSize: 20
           ),),

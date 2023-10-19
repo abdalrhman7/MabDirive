@@ -61,14 +61,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 20.h,),
               ProfileTextField(
-                onTab: () {},
+
                 controller: nameController,
                 label: 'Name',
                 icon: Icons.person,
               ),
               SizedBox(height: 20.h,),
               ProfileTextField(
-                onTab: () {},
+
                 controller: emailController,
                 label: 'Email',
                 icon: Icons.email,
@@ -76,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               SizedBox(height: 20.h,),
               ProfileTextField(
-                onTab: () {},
+
                 controller: phoneController,
                 label: 'Phone',
                 icon: Icons.phone,
