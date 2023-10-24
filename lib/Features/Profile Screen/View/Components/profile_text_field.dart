@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProfileTextField extends StatelessWidget {
-     ProfileTextField({super.key,
+     const ProfileTextField({super.key,
       required this.controller,
       required this.icon,
     required this.label,
